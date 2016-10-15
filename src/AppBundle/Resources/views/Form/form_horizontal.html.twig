@@ -1,0 +1,60 @@
+{% block form_start %}
+    {% spaceless %}
+        {% set method = method|upper %}
+        {% if method in ["GET", "POST"] %}
+            {% set form_method = method %}
+        {% else %}
+            {% set form_method = "POST" %}
+        {% endif %}
+        <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        {% if form_method != method %}
+            <input type="hidden" name="_method" value="{{ method }}" />
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_start %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+
+{% block form_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+
+
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' ')|trim}) %}
+                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}
+                {% if required %}
+                    <span class="required" title="This field is required">*</span>
+                {% endif %}
+                </label>
+        {% endif %}
+
+    {% endspaceless %}
+{% endblock %}
+
+
+{% block file_widget %}
+    {% spaceless %}
+        {% set type = type|default('file') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} />
+    {% endspaceless %}
+{% endblock file_widget %}

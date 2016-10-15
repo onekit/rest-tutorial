@@ -1,0 +1,63 @@
+services:
+  api.fos_user_manager:
+    class: FOS\UserBundle\Doctrine\UserManager
+    public: false
+    arguments:
+      - @security.encoder_factory
+      - @fos_user.util.username_canonicalizer
+      - @fos_user.util.email_canonicalizer
+      - @doctrine.orm.entity_manager
+
+  api.manager.contact:
+        class:        AppBundle\Manager\ContactManager
+        arguments:    [@doctrine.orm.entity_manager]
+
+  manager.user:
+      class:        AppBundle\Manager\UserManager
+      arguments:    [@doctrine.orm.entity_manager, @form.factory, @request_stack]
+
+  app.handler.when:
+      class: AppBundle\Handler\WhenHandler
+      arguments: [@translator]
+
+  app.locale_listener:
+      class: AppBundle\EventListener\LocaleListener
+      arguments: ["%kernel.default_locale%"]
+      tags:
+          - { name: kernel.event_subscriber }
+
+#  app.decoder.form:
+#      class: AppBundle\Decoder\FormDecoder
+#
+#  app_serializer.form_deserialization_visitor:
+#      class: AppBundle\Serializer\FormDeserializationVisitor
+#      arguments: [@jms_serializer.naming_strategy, @app.decoder.form]
+#      tags:
+#          - { name: jms_serializer.deserialization_visitor, format: form }
+#
+#  twig.text_extension:
+#     class: Twig_Extensions_Extension_Text
+#     tags:
+#         - name: twig.extension
+#
+#  api.event.rest_handle_listener:
+#    class: AppBundle\EventListener\RestListener
+#    arguments: [@annotation_reader, @fos_rest.request.param_fetcher]
+#    tags:
+#      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
+#      - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 200 }
+#
+#  app.event.action_listener:
+#    class: AppBundle\EventListener\ActionListener
+#    arguments: [@security.token_storage, @request_stack]
+#    tags:
+#      - { name: doctrine.event_listener, event: postPersist }
+#      - { name: doctrine.event_listener, event: postUpdate }
+#      - { name: doctrine.event_listener, event: preRemove }
+#
+#  app.api_doc.annotation_handler:
+#    class: AppBundle\AnnotationHandler\RestResultHandler
+#    arguments: [@nelmio_api_doc.extractor.handler.fos_rest]
+#    tags:
+#      - { name: nelmio_api_doc.extractor.handler }
+#
