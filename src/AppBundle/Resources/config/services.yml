@@ -24,6 +24,9 @@ services:
       class: AppBundle\Handler\WhenHandler
       arguments: [@translator]
 
+#  handler.exception_wrapper:
+#      class: AppBundle\Handler\ViewHandler
+
   app.locale_listener:
       class: AppBundle\EventListener\LocaleListener
       arguments: ["%kernel.default_locale%"]
@@ -38,19 +41,13 @@ services:
       arguments: [@jms_serializer.naming_strategy, @app.decoder.form]
       tags:
           - { name: jms_serializer.deserialization_visitor, format: form }
-#
-#  twig.text_extension:
-#     class: Twig_Extensions_Extension_Text
-#     tags:
-#         - name: twig.extension
-#
+
   api.event.rest_handle_listener:
     class: AppBundle\EventListener\RestListener
     arguments: [@annotation_reader, @fos_rest.request.param_fetcher]
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
       - { name: kernel.event_listener, event: kernel.view, method: onKernelView, priority: 200 }
-
 
   app.api_doc.annotation_handler:
     class: AppBundle\AnnotationHandler\RestResultHandler

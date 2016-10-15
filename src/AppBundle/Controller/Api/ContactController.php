@@ -6,8 +6,12 @@ use JMS\DiExtraBundle\Annotation as DI;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Sensio;
 use AppBundle\Annotation as App;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 use FOS\RestBundle\Controller\Annotations\View as ViewAnnotation;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Context\Context;
+
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Manager\ContactManager;

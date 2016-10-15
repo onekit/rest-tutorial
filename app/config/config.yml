@@ -24,6 +24,9 @@ framework:
     session: ~
     fragments:       ~
     http_method_override: true
+    serializer:
+        enabled: true
+        enable_annotations: true
 
 # Twig Configuration
 twig:
@@ -91,13 +94,6 @@ fos_user:
     service:
         mailer: fos_user.mailer.twig_swift
 
-fos_rest:
-    param_fetcher_listener: true
-    body_listener: true
-    format_listener:
-        enabled: true
-        rules:
-            - { path: '^/', priorities: ['json', 'xml'], fallback_format: 'html' }
 
 
 vich_uploader:
@@ -159,7 +155,7 @@ jms_translation:
 sensio_framework_extra:
     router:   { annotations: true }
     request:  { converters: true, auto_convert: true }
-    view:     { annotations: false }
+    view:     { annotations: true }
     cache:    { annotations: true }
     security: { annotations: true }
 
@@ -190,9 +186,10 @@ fos_rest:
         failed_validation: HTTP_BAD_REQUEST
         default_engine: twig
         view_response_listener: "force"
-        #exception_wrapper_handler: null
     exception:
         enabled: true
+    service:
+        view_handler:         fos_rest.view_handler.default
 
 lexik_maintenance:
     authorized:
