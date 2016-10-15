@@ -1,6 +1,6 @@
 <?php
 
-namespace onekit\UserBundle\Form\Type;
+namespace UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;

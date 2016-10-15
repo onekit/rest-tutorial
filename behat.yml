@@ -1,0 +1,15 @@
+default:
+  extensions:
+    Behat\Symfony2Extension: ~
+    Rezzza\RestApiBehatExtension\Extension:
+      rest:
+        base_url: ~
+        store_response: true
+    AppBundle\Features\Extension: ~
+  suites:
+    rest_suite:
+      type: symfony_bundle
+      bundle: 'AppBundle'
+      contexts:
+        - Rezzza\RestApiBehatExtension\Json\JsonContext
+        - AppBundle\Features\Context\RestContext

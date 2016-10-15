@@ -21,8 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(
  *      name = "mailer_user",
  *      indexes = {
- *          @ORM\Index(name="user_enabled_idx", columns={"enabled"}),
- *          @ORM\Index(name="username_idx", columns={"username"})
+ *          @ORM\Index(name="created_idx", columns={"created"})
  *      }
  * )
  */
@@ -37,7 +36,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Serial\Groups({"default", "doctor", "profile"})
+     * @Serial\Groups({"default", "contact", "profile"})
      */
     protected $id;
 

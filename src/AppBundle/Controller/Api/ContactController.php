@@ -49,8 +49,8 @@ class ContactController extends RestController
     /**
      * @ApiDoc(input = "AppBundle\Entity\Input\CreateContact", views = {"default", "admin"})
      *
-
      * @Rest\Post("", name="api_post_contact")
+     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
      * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
      * @Rest\View(statusCode=201, serializerGroups={"default", "contact"})
      *
@@ -68,9 +68,67 @@ class ContactController extends RestController
 
 
     /**
+     * @ApiDoc(input = "AppBundle\Entity\Input\CreateContact", views = {"default", "admin"})
+     *
+     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Rest\Put("/{id}", name="api_put_contact")
+     * @Sensio\ParamConverter("contact", converter="doctrine.orm")
+     * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
+     * @Rest\View(serializerGroups={"default", "contact"})
+     *
+     * @param Contact $contact
+     * @param CreateContact $createContact
+     * @param ConstraintViolationListInterface $constraints
+     * @return Contact|Response
+     */
+    public function putContactAction(Contact $contact, CreateContact $createContact, ConstraintViolationListInterface $constraints)
+    {
+        if ($constraints->count()) {
+            return $this->handleError('Validation errors', $constraints);
+        }
+        return $this->contactManager->update($contact, $createContact);
+    }
+
+    /**
      * @ApiDoc(views = {"default", "admin"})
      *
-     * @Sensio\Security("is_granted('delete', contact)")
+     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Rest\Get("", name="api_get_contact_list")
+     * @App\RestResult(paginate=true, sort={"id", "when", "title", "email"})
+     * @Rest\View(serializerGroups={"default"})
+     *
+     * @param $page
+     * @param $limit
+     * @param $order
+     * @param $direction
+     * @return Contact[]
+     */
+    public function getContactListAction($order, $direction, $page, $limit)
+    {
+        return $this->contactManager->getList()->order($order, $direction)->paginate($page, $limit);
+    }
+
+
+    /**
+     * @ApiDoc(views = {"default", "admin"})
+     *
+     * @Sensio\Security("is_granted('view', contact)")
+     * @Rest\Get("/{id}", name="api_get_contact", requirements={"id" = "\d+"})
+     * @Sensio\ParamConverter("contact", converter="doctrine.orm")
+     * @Rest\View(serializerGroups={"default", "contact"})
+     *
+     * @param Contact $contact
+     * @return Contact
+     */
+    public function getContactAction(Contact $contact)
+    {
+        return $contact;
+    }
+
+    /**
+     * @ApiDoc(views = {"default", "admin"})
+     *
+     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
      * @Rest\Delete("/{id}", name="api_delete_contact", requirements={"id" = "\d+"})
      * @Sensio\ParamConverter("contact", converter="doctrine.orm")
      * @Rest\View()

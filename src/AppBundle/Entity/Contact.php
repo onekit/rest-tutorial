@@ -34,31 +34,35 @@ class Contact
 
     /**
      * @var string $title
+     * @ORM\Column(name="title", type="string", length=255)
      * @Serial\Type("string")
      */
     public $title;
 
     /**
      * @var string $when
+     * @ORM\Column(name="when", type="datetime")
      * @Serial\Type("datetime")
      */
     public $when;
 
     /**
      * @var string $city
-     *
+     * @ORM\Column(name="city", type="string", length=255)
      * @Serial\Type("string")
      */
     public $city;
 
     /**
      * @var string $body
+     * @ORM\Column(name="body", type="text")
      * @Serial\Type("string")
      */
     public $body;
 
     /**
      * @var string $details
+     * @ORM\Column(name="details", type="text")
      * @Serial\Type("string")
      */
     public $details;

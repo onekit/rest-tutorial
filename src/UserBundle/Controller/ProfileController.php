@@ -1,6 +1,6 @@
 <?php
 
-namespace onekit\UserBundle\Controller;
+namespace UserBundle\Controller;
 
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
