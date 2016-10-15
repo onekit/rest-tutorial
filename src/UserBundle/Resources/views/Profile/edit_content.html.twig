@@ -1,0 +1,14 @@
+{% form_theme form 'AppBundle:Form:form_horizontal.html.twig' %}
+<div class="bb">
+    <h2>{{ 'Edit profile'|trans }}</h2>
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="form" id="profile_edit">
+    <div class="form-group">
+        <label>{{ form_label(form.username) }}</label>
+        {{ form_errors(form.username) }}
+        {{ form_widget(form.username) }}
+    </div>
+    <div class="btn-group">
+        <input type="submit" class="btn " value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}"/>
+    </div>
+</form>
+</div>

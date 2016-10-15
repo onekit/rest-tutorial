@@ -1,3 +1,29 @@
-app:
-    resource: "@AppBundle/Controller/"
+default:
+    resource: "@AppBundle/Controller/DefaultController.php"
     type:     annotation
+    prefix:   /
+
+api_routes:
+    resource: "@AppBundle/Controller/Api"
+    type: annotation
+    prefix: /api
+    defaults: { _format: json }
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc/api
+
+# redirecting the root
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /
+        permanent: true

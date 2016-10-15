@@ -1,0 +1,14 @@
+{% if is_granted("ROLE_SUPER_ADMIN") %}
+    {% set role = 'admin' %}
+{% else %}
+    {% set role = 'base' %}
+{% endif %}
+{% extends 'AppBundle:Layout:'~role~'.html.twig' %}
+
+
+{% block body %}
+    {% include "UserBundle:Profile:show_content.html.twig" %}
+{% endblock %}
+
+
+

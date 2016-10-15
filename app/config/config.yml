@@ -5,14 +5,9 @@ imports:
     - { resource: doctrine_extensions.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
-
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator: { fallback: %locale% }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -20,22 +15,27 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
-    session:
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+    session: ~
     fragments:       ~
     http_method_override: true
 
 # Twig Configuration
-#twig:
-#    debug:            "%kernel.debug%"
-#    strict_variables: "%kernel.debug%"
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles:        [ AppBundle ]
+    #java: /usr/bin/java
 
 # Doctrine Configuration
 doctrine:
@@ -56,16 +56,194 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+stof_doctrine_extensions:
+    orm:
+        default:
+            sluggable: true
+            timestampable: true
+            translatable: true
+            softdeleteable: true
+
 # Swiftmailer Configuration
-#swiftmailer:
-#    transport: "%mailer_transport%"
-#    host:      "%mailer_host%"
-#    username:  "%mailer_user%"
-#    password:  "%mailer_password%"
-#    spool:     { type: memory }
-#
-#fos_rest:
-#    param_fetcher_listener: true
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    port:      "%mailer_port%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    encryption: "%mailer_encryption%"
+    auth_mode:            ~
+    spool:
+        type:                 file
+        path:                 '%kernel.cache_dir%/swiftmailer/spool'
+
+fos_user:
+    from_email:
+        address:        %admin_email%
+        sender_name:    %admin_name%
+    db_driver: orm
+#    model_manager_name: api
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    use_listener: true
+    service:
+        mailer: fos_user.mailer.twig_swift
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+        enabled: true
+        rules:
+            - { path: '^/', priorities: ['json', 'xml'], fallback_format: 'html' }
+
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        user_picture:
+            upload_destination: %kernel.root_dir%/media
+            namer: vich_uploader.namer_uniqid
+            delete_on_remove:   true  # determines whether to delete file upon removal of entity
+            delete_on_update:   true  # determines wheter to delete the file upon update of entity
+            inject_on_load:     true # determines whether to inject a File instance upon load
+
+liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/media/
+    filter_sets:
+        user_picture:
+            quality: 95
+            filters:
+                thumbnail: { size: [51, 51], mode: outbound }
+        icon:
+            quality: 95
+            filters:
+                thumbnail: { size: [128, 128], mode: outbound }
+        thumb:
+            quality: 95
+            filters:
+                thumbnail: { size: [460, 460], mode: outbound }
+
+        thumb_small:
+            quality: 95
+            filters:
+                thumbnail: { size: [800, 600], mode: outbound }
+        thumb_large:
+            quality: 98
+            filters:
+                thumbnail: { size: [1200, 1080], mode: outbound }
+
+jms_di_extra:
+    locations:
+            all_bundles: false
+            bundles: [AppBundle]
+            directories: ["%kernel.root_dir%/../src"]
+
+jms_translation:
+    configs:
+        app:
+            dirs: [ %kernel.root_dir%/../src]
+            output_dir: %kernel.root_dir%/Resources/translations
+            ignored_domains: [routes]
+            excluded_names: ["*TestCase.php", "*Test.php","*Context.php"]
+            excluded_dirs: [cache, data, logs, "Features"]
+            output_format: yml
+
+
+
+sensio_framework_extra:
+    router:   { annotations: true }
+    request:  { converters: true, auto_convert: true }
+    view:     { annotations: false }
+    cache:    { annotations: true }
+    security: { annotations: true }
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    param_fetcher_listener:
+        enabled:              true
+        force:                true
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+            form: app.decoder.form
+            xml: fos_rest.decoder.xml
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: constraints
+    view:
+        formats:
+            json: true
+            rss: true
+            xml: true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+        view_response_listener: "force"
+        #exception_wrapper_handler: null
+    exception:
+        enabled: true
+
+lexik_maintenance:
+    authorized:
+        path: /api                                                          # Optional. Authorized path, accepts regexs
+        host: localhost                                                     # Optional. Authorized domain, accepts regexs
+        ips: ['127.0.0.1', '78.46.95.183']                                  # Optional. Authorized ip addresses
+        query: { foo: bar }                                                 # Optional. Authorized request query parameter (GET/POST)
+        route:                                                              # Optional. Authorized route name
+        attributes:                                                         # Optional. Authorized route attributes
+    driver:
+        ttl: 3600                                                                  # Optional ttl option, can be not set
+
+         # File driver
+        class: '\Lexik\Bundle\MaintenanceBundle\Drivers\FileDriver'                # class for file driver
+        options: {file_path: %kernel.root_dir%/cache/lock}                         # file_path is the complete path for create the file
+
+    #Optional. response code and status of the maintenance page
+    response:
+        code: 503
+        status: "Service Temporarily Unavailable"
+
+
+lexik_jwt_authentication:
+    private_key_path: %jwt_private_key_path%
+    public_key_path:  %jwt_public_key_path%
+    pass_phrase:      %jwt_key_pass_phrase%
+    token_ttl:        %jwt_token_ttl%
+
+nelmio_api_doc:
+    name:                 'Mailer: API documentation'
+    sandbox:
+        authentication:
+            name: Authorization
+            delivery: http
+            type: bearer
+            custom_endpoint: false
+        enabled: true
+        accept_type: application/json
+        body_format:
+            formats: [ json, form ]
+            default_format: json
+        request_format:
+            formats:
+                json: application/json
+                xml: application/xml
+            method: accept_header
+            default_format: json
+        entity_to_choice: false     # default is `true`, if `false`, entity collection
+                                    # will not be mapped as choice
+
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: 'Y-m-d\TH:i:s'
