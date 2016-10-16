@@ -2,10 +2,10 @@
 namespace AppBundle\Handler;
 
 
-use FOS\RestBundle\View\ViewHandlerInterface;
+use FOS\RestBundle\View\ExceptionWrapperHandlerInterface;
 use Symfony\Component\Debug\Exception\FlattenException;
 
-class ViewHandler implements ViewHandlerInterface
+class ExceptionWrapperHandler implements ExceptionWrapperHandlerInterface
 {
     public function wrap($data)
     {

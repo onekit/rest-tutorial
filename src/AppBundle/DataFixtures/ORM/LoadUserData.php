@@ -1,6 +1,6 @@
 <?php
 
-namespace onekit\AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,7 +27,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         // admins
-        $this->createUser(false, 'ant', 'ant', 'onekit@gmail.com', true);
+        $this->createUser('admin', 'admin', 'admin', 'onekit@gmail.com', true);
 
     }
 
