@@ -7,13 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation as Serial;
 
 /**
  * Contact
  *
  * @ORM\Entity
- * @ORM\Table(name="contacts")
+ * @ORM\Table(name="mailer_contacts")
  */
 class Contact
 {
@@ -75,12 +76,29 @@ class Contact
     protected $created;
 
     /**
-     * @var File $image
+     * @Vich\UploadableField(mapping="contact_picture", fileNameProperty="imagePath")
      *
-     * @Assert\Image
-     * @Assert\NotNull
+     * @var File
      */
     public $image;
+
+    /**
+     * @var string
+     *
+     * @var string $imagePath
+     * @ORM\Column(name="image_path", type="string", length=64, nullable=true)
+     */
+    protected $imagePath;
+
+    /**
+     * @var string
+     *
+     * @var string $imagePath
+     * @ORM\Column(name="image_url", type="string", length=255, nullable=true)
+     * @Serial\SerializedName("image")
+     * @Serial\Groups({"contact_picture"})
+     */
+    protected $imageUrl;
 
     /**
      * @var string
@@ -88,6 +106,11 @@ class Contact
      * @ORM\Column(name="ip", type="string", length=64)
      */
     protected $ip;
+
+
+
+
+
 
     /**
      * Get id
@@ -226,6 +249,45 @@ class Contact
     public function setDetails($details)
     {
         $this->details = $details;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getImagePath()
+    {
+        return $this->imagePath;
+    }
+
+    /**
+     * @param string $imagePath
+     * @return $this
+     */
+    public function setImagePath($imagePath)
+    {
+        $this->imagePath = $imagePath;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     * @return $this
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
     }
 
 }

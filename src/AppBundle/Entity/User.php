@@ -58,12 +58,6 @@ class User extends BaseUser
     protected $created;
 
     /**
-     * @var
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\SystemLog", mappedBy="user", cascade={"all"})
-     */
-    protected $systemLogs;
-
-    /**
      * @Vich\UploadableField(mapping="user_picture", fileNameProperty="imagePath")
      *
      * @var File
@@ -123,18 +117,10 @@ class User extends BaseUser
     }
 
 
-    /**
-     * @return bool
-     */
-    public function isDeleted()
-    {
-        return $this->isExpired();
-    }
-
     public function __construct()
     {
         parent::__construct();
-        $this->systemLogs = new ArrayCollection();
+        // your own logic
     }
 
 
@@ -179,40 +165,6 @@ class User extends BaseUser
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * Add systemLog
-     *
-     * @param \AppBundle\Entity\SystemLog $systemLog
-     *
-     * @return User
-     */
-    public function addSystemLog(\AppBundle\Entity\SystemLog $systemLog)
-    {
-        $this->systemLogs[] = $systemLog;
-
-        return $this;
-    }
-
-    /**
-     * Remove systemLog
-     *
-     * @param \AppBundle\Entity\SystemLog $systemLog
-     */
-    public function removeSystemLogsSent(\AppBundle\Entity\SystemLog $systemLog)
-    {
-        $this->systemLogs->removeElement($systemLog);
-    }
-
-    /**
-     * Get systemLogsSent
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSystemLogsSent()
-    {
-        return $this->systemLogs;
     }
 
     /**
