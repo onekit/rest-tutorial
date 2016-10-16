@@ -47,22 +47,6 @@ services:
      tags:
          - name: twig.extension
 
-  api.event.jwt_create_listener:
-    class: AppBundle\EventListener\JWTCreatedListener
-    tags:
-      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
-
-  api.event.authentication_success_listener:
-    class: AppBundle\EventListener\AuthenticationSuccessListener
-    arguments: ['@translator']
-    tags:
-      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
-
-  api.event.jwt_authenticated_listener:
-    class: AppBundle\EventListener\AuthenticationSuccessListener
-    tags:
-      - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_authenticated, method: onJWTAuthenticated }
-
   api.event.rest_handle_listener:
     class: AppBundle\EventListener\RestListener
     arguments: ['@annotation_reader', '@fos_rest.request.param_fetcher']
