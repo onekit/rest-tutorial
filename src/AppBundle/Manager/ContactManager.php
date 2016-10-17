@@ -39,17 +39,13 @@ class ContactManager extends ApiManager
             ->setBody(
                 $this->container->get('templating')->render(
                     'AppBundle:Mail:contactMail.html.twig',
-                    array(
+                    [
                         'email' => $contact->getEmail(),
                         'body' => $contact->getBody()
-                    )
+                    ]
                 )
             );
-        $contact->setEmail($contact->getEmail());
-        $this->get('mailer')->send($message);
-        $this->em->persist($contact);
-        $this->em->flush();
-
+        $this->container->get('mailer')->send($message);
         return $contact;
     }
 
@@ -64,6 +60,7 @@ class ContactManager extends ApiManager
         $contact->setDetails($createContact->details);
 
         $this->mail($contact); //send email
+
         $this->em->persist($contact);
         $this->em->flush();
         return $contact;
@@ -85,7 +82,7 @@ class ContactManager extends ApiManager
 
     public function order($column, $direction)
     {
-        $this->qb->orderBy('c.'.$column, $direction);
+        //$this->qb->orderBy('c.'.$column, $direction);
         return $this;
     }
 }

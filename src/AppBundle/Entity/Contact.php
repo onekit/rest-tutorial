@@ -27,18 +27,24 @@ class Contact
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serial\SerializedName("id")
+     * @Serial\Groups({"default"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(name="email", type="string", length=255)
+     * @Serial\SerializedName("email")
+     * @Serial\Groups({"default"})
      */
     protected $email;
 
     /**
      * @var string $title
      * @ORM\Column(name="title", type="string", length=255)
+     * @Serial\SerializedName("title")
+     * @Serial\Groups({"default"})
      * @Serial\Type("string")
      */
     public $title;
@@ -58,6 +64,7 @@ class Contact
     /**
      * @var string $city
      * @ORM\Column(name="city", type="string", length=255)
+     * @Serial\Groups({"default"})
      * @Serial\Type("string")
      */
     public $city;
@@ -65,6 +72,7 @@ class Contact
     /**
      * @var string $body
      * @ORM\Column(name="body", type="text")
+     * @Serial\Groups({"default"})
      * @Serial\Type("string")
      */
     public $body;
@@ -72,6 +80,7 @@ class Contact
     /**
      * @var string $details
      * @ORM\Column(name="details", type="text")
+     * @Serial\Groups({"default"})
      * @Serial\Type("string")
      */
     public $details;
@@ -95,15 +104,6 @@ class Contact
      */
     public $imageFile;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ip", type="string", length=64)
-     */
-    protected $ip;
-
-
-
 
 
 
@@ -117,22 +117,6 @@ class Contact
         return $this->id;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getIp()
-    {
-        return $this->ip;
-    }
-
-    /**
-     * @param string $ip
-     */
-    public function setIp($ip)
-    {
-        $this->ip = $ip;
-    }
 
     /**
      * @return string
