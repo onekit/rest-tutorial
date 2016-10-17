@@ -23,7 +23,7 @@ class CreateContact
     /**
      * @var string $title
      *
-     * @Assert\Length(min=12)
+     * @Assert\Length(min=2)
      * @Serial\Type("string")
      */
     public $title;
@@ -62,9 +62,7 @@ class CreateContact
      * @var File $image
      *
      * @Assert\Image
-     * @Assert\NotNull
      */
     public $image;
-
 
 }

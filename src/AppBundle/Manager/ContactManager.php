@@ -1,8 +1,8 @@
 <?php
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Input\CreateContact;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\SystemLog;
 use AppBundle\Entity\Contact;
 
 class ContactManager
@@ -14,9 +14,23 @@ class ContactManager
         $this->om = $om;
     }
 
-    public function update(SystemLog $systemLog, $flush = false)
+    public function create(CreateContact $createContact)
     {
-        $this->om->persist($systemLog);
+        $contact = new Contact();
+        $contact->setTitle($createContact->title);
+        $contact->setEmail($createContact->email);
+        $contact->setWhen($createContact->when);
+        $contact->setCity($createContact->city);
+        $contact->setBody($createContact->body);
+        $contact->setDetails($createContact->details);
+        $this->om->persist($contact);
+        $this->om->flush();
+        return $contact;
+    }
+
+    public function update(Contact $contact, $flush = false)
+    {
+        $this->om->persist($contact);
         if ($flush) {
             $this->om->flush();
         }

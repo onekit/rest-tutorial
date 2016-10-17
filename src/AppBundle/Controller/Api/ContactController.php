@@ -54,7 +54,6 @@ class ContactController extends RestController
      * @ApiDoc(input = "AppBundle\Entity\Input\CreateContact", views = {"default", "admin"})
      *
      * @Rest\Post("", name="api_post_contact")
-     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
      * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
      * @Rest\View(statusCode=201, serializerGroups={"default", "contact"})
      *
@@ -74,7 +73,7 @@ class ContactController extends RestController
     /**
      * @ApiDoc(input = "AppBundle\Entity\Input\CreateContact", views = {"default", "admin"})
      *
-     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Put("/{id}", name="api_put_contact")
      * @Sensio\ParamConverter("contact", converter="doctrine.orm")
      * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
@@ -96,7 +95,7 @@ class ContactController extends RestController
     /**
      * @ApiDoc(views = {"default", "admin"})
      *
-     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Get("", name="api_get_contact_list")
      * @App\RestResult(paginate=true, sort={"id", "when", "title", "email"})
      * @Rest\View(serializerGroups={"default"})
@@ -132,7 +131,7 @@ class ContactController extends RestController
     /**
      * @ApiDoc(views = {"default", "admin"})
      *
-     * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Sensio\Security("has_role('ROLE_ADMIN')")
      * @Rest\Delete("/{id}", name="api_delete_contact", requirements={"id" = "\d+"})
      * @Sensio\ParamConverter("contact", converter="doctrine.orm")
      * @Rest\View()
