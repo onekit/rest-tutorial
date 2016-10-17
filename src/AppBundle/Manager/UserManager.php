@@ -5,9 +5,9 @@ namespace AppBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Annotation\RestResult;
 use AppBundle\Entity\User;
-use AppBundle\Form\Type\UserFormType;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Entity\Output\Result;
+use AppBundle\Form\Type\UserFormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -121,21 +121,6 @@ class UserManager
     public function autocomplete($keyword, $page, $limit)
     {
         return $this->repo->autocompleteQB($keyword, $page, $limit)->getQuery()->getResult();
-    }
-
-    public function doctorAutocomplete($keyword, $page, $limit)
-    {
-        return $this->repo->doctorAutocompleteQB($keyword, $page, $limit)->getQuery()->getResult();
-    }
-
-    public function doctorAssistantAutocomplete($keyword, $page, $limit, $user)
-    {
-        return $this->repo->doctorAssistantAutocompleteQB($keyword, $page, $limit, $user)->getQuery()->getResult();
-    }
-
-    public function adminAutocomplete($keyword, $page, $limit)
-    {
-        return $this->repo->adminAutocompleteQB($keyword, $page, $limit)->getQuery()->getResult();
     }
 
     private function handleResponseByData($data)

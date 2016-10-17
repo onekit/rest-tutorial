@@ -219,7 +219,7 @@ lexik_jwt_authentication:
     token_ttl:        %jwt_token_ttl%
 
 nelmio_api_doc:
-    name: 'Mailer: API documentation'
+    name: 'REST Mailer: API documentation'
     sandbox:
         authentication:
             name: Authorization

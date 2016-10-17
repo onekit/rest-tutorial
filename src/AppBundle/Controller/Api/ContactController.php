@@ -97,7 +97,7 @@ class ContactController extends RestController
      *
      * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Get("", name="api_get_contact_list")
-     * @App\RestResult(paginate=true, sort={"id", "when", "title", "email"})
+     * @App\RestResult(paginate=true, sort={"when"})
      * @Rest\View(serializerGroups={"default"})
      *
      * @param $page

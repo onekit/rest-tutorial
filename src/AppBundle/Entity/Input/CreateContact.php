@@ -29,8 +29,9 @@ class CreateContact
     public $title;
 
     /**
-     * @var string $when
-     * @Serial\Type("datetime")
+     * @var \DateTime $when
+     * @Assert\NotNull()
+     * @Serial\Type("DateTime")
      */
     public $when;
 
@@ -59,9 +60,7 @@ class CreateContact
     public $details;
 
     /**
-     * @var File $image
-     *
-     * @Assert\Image
+     * @var File $imageFile
      */
     public $image;
 

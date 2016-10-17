@@ -14,7 +14,7 @@ services:
 
   api.manager.contact:
         class:        AppBundle\Manager\ContactManager
-        arguments:    ['@doctrine.orm.entity_manager']
+        arguments:    ['@doctrine.orm.entity_manager', '%admin_email%', '@service_container']
 
   manager.user:
       class:        AppBundle\Manager\UserManager

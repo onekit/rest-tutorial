@@ -9,12 +9,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation as Serial;
+use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 
 /**
  * Contact
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
  * @ORM\Table(name="mailer_contacts")
+ * @Vich\Uploadable
+ * @Fresh\VichSerializableClass
  */
 class Contact
 {
@@ -41,9 +44,14 @@ class Contact
     public $title;
 
     /**
-     * @var string $when
-     * @ORM\Column(name="when", type="datetime")
-     * @Serial\Type("datetime")
+     * @var \DateTime $when
+     *
+     * @ORM\Column(name="when", type="datetime", nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
+     * @Serial\SerializedName("when")
+     * @Serial\Groups({"default"})
+     * @Serial\Type("DateTime")
      */
     public $when;
 
@@ -69,36 +77,23 @@ class Contact
     public $details;
 
     /**
-     * @var \DateTime $created
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created", type="datetime")
-     */
-    protected $created;
-
-    /**
-     * @Vich\UploadableField(mapping="contact_picture", fileNameProperty="imagePath")
-     *
-     * @var File
-     */
-    public $image;
-
-    /**
      * @var string
      *
      * @var string $imagePath
-     * @ORM\Column(name="image_path", type="string", length=64, nullable=true)
-     */
-    protected $imagePath;
-
-    /**
-     * @var string
-     *
-     * @var string $imagePath
-     * @ORM\Column(name="image_url", type="string", length=255, nullable=true)
+     * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
+     * @Serial\Expose
      * @Serial\SerializedName("image")
-     * @Serial\Groups({"contact_picture"})
+     *
+     * @Fresh\VichSerializableField("imageFile")
      */
-    protected $imageUrl;
+    protected $imageName;
+
+    /**
+     * @Serial\Exclude
+     * @Vich\UploadableField(mapping="image_mapping", fileNameProperty="imageName")
+     * @var File $imageFile
+     */
+    public $imageFile;
 
     /**
      * @var string
@@ -140,22 +135,6 @@ class Contact
     }
 
     /**
-     * @return DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * @param DateTime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
      * @return string
      */
     public function getEmail()
@@ -187,21 +166,8 @@ class Contact
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getWhen()
-    {
-        return $this->when;
-    }
 
-    /**
-     * @param string $when
-     */
-    public function setWhen($when)
-    {
-        $this->when = $when;
-    }
+
 
     /**
      * @return string
@@ -251,43 +217,21 @@ class Contact
         $this->details = $details;
     }
 
-
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getImagePath()
+    public function getWhen()
     {
-        return $this->imagePath;
+        return $this->when;
     }
 
     /**
-     * @param string $imagePath
-     * @return $this
+     * @param \DateTime $when
      */
-    public function setImagePath($imagePath)
+    public function setWhen($when)
     {
-        $this->imagePath = $imagePath;
-
-        return $this;
+        $this->when = $when;
     }
 
-    /**
-     * @return string
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
-    }
-
-    /**
-     * @param string $imageUrl
-     * @return $this
-     */
-    public function setImageUrl($imageUrl)
-    {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
-    }
 
 }
