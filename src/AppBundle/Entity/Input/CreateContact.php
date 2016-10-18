@@ -4,6 +4,7 @@ use JMS\Serializer\Annotation as Serial;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 
+
 /**
  * Class CreateContact
  * @package AppBundle\Entity\Input
@@ -13,7 +14,7 @@ class CreateContact
 {
     /**
      * @var string $email
-     *
+     * @Assert\NotBlank()
      * @Assert\Email()
      * @Assert\Length(min=2, max=255)
      * @Serial\Type("string")
@@ -22,46 +23,46 @@ class CreateContact
 
     /**
      * @var string $title
-     *
+     * @Assert\NotBlank()
      * @Assert\Length(min=2)
      * @Serial\Type("string")
      */
     public $title;
 
+
     /**
      * @var \DateTime $when
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
      * @Serial\Type("DateTime")
      */
     public $when;
 
     /**
      * @var string $city
-     *
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank()
      * @Serial\Type("string")
      */
     public $city;
 
     /**
      * @var string $body
-     *
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank()
      * @Serial\Type("string")
      */
     public $body;
 
     /**
      * @var string $details
-     *
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank()
      * @Serial\Type("string")
      */
     public $details;
 
-    /**
-     * @var File $imageFile
-     */
-    public $image;
+//    /**
+//     * @var Image $image
+//     * @Assert\Image(minWidth=100,maxWidth=1024,minHeight=100,maxHeight=768)
+//     */
+//    public $image;
 
 }

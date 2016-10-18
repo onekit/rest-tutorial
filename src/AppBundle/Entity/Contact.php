@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -16,6 +15,7 @@ use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
  * @ORM\Table(name="mailer_contacts")
+ * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
  * @Fresh\VichSerializableClass
  */
@@ -49,17 +49,16 @@ class Contact
      */
     public $title;
 
+
     /**
      * @var \DateTime $when
      *
-     * @ORM\Column(name="when", type="datetime", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
+     * @ORM\Column(name="when_datetime", type="datetime", nullable=false)
      * @Serial\SerializedName("when")
-     * @Serial\Groups({"default"})
+     * @Serial\Groups({"default", "contact"})
      * @Serial\Type("DateTime")
      */
-    public $when;
+    protected $when;
 
     /**
      * @var string $city
@@ -85,26 +84,21 @@ class Contact
      */
     public $details;
 
-    /**
-     * @var string
-     *
-     * @var string $imagePath
-     * @ORM\Column(name="image_name", type="string", length=255, nullable=true)
-     * @Serial\Expose
-     * @Serial\SerializedName("image")
-     *
-     * @Fresh\VichSerializableField("imageFile")
-     */
-    protected $imageName;
-
-    /**
-     * @Serial\Exclude
-     * @Vich\UploadableField(mapping="image_mapping", fileNameProperty="imageName")
-     * @var File $imageFile
-     */
-    public $imageFile;
-
-
+//    /**
+//     * @var string $imagePath Image name
+//     * @ORM\Column(type="string", length=255)
+//     *
+//     * @Serial\SerializedName("image")
+//     * @Fresh\VichSerializableField("imageFile", includeHost=false)
+//     */
+//    protected $imageName;
+//
+//    /**
+//     * @Vich\UploadableField(mapping="contact_image_mapping", fileNameProperty="imageName")
+//     * @var File $imageFile
+//
+//     */
+//    public $imageFile;
 
 
     /**
@@ -210,12 +204,11 @@ class Contact
     }
 
     /**
-     * @param \DateTime $when
+     * @return \DateTime
      */
     public function setWhen($when)
     {
         $this->when = $when;
     }
-
 
 }

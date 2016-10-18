@@ -59,7 +59,7 @@ class ContactManager extends ApiManager
         $contact->setBody($createContact->body);
         $contact->setDetails($createContact->details);
 
-        $this->mail($contact); //send email
+        //$this->mail($contact); //send email on create new contact
 
         $this->em->persist($contact);
         $this->em->flush();
