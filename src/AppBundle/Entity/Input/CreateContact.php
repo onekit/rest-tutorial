@@ -59,10 +59,10 @@ class CreateContact
      */
     public $details;
 
-//    /**
-//     * @var Image $image
-//     * @Assert\Image(minWidth=100,maxWidth=1024,minHeight=100,maxHeight=768)
-//     */
-//    public $image;
+    /**
+     * @var File $image
+     * @Serial\Type("Symfony\Component\HttpFoundation\File\File")
+     */
+    public $image;
 
 }

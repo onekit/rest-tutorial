@@ -78,6 +78,7 @@ class ContactManager extends ApiManager
         $contact->setCity($createContact->city);
         $contact->setBody($createContact->body);
         $contact->setDetails($createContact->details);
+        $contact->setImageFile($createContact->image);
         $this->em->flush();
         return $contact;
     }

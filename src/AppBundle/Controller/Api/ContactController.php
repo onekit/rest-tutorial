@@ -98,8 +98,8 @@ class ContactController extends RestController
      * @Rest\View(serializerGroups={"default","contact_list"})
      * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page")
      * @Rest\QueryParam(name="limit", requirements="\d+", default="50", description="Results on page")
-     * @Rest\QueryParam(name="orderBy", requirements="\d+", default="id", description="Order by")
-     * @Rest\QueryParam(name="orderDir", requirements="\d+", default="ASC", description="Order direction")
+     * @Rest\QueryParam(name="orderBy", default="id", description="Order by")
+     * @Rest\QueryParam(name="orderDir", default="ASC", description="Order direction")
 
      * @param string $page
      * @param string $limit

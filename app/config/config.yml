@@ -99,7 +99,7 @@ fos_user:
 vich_uploader:
     db_driver: orm
     mappings:
-        user_picture:
+        contact_picture:
             upload_destination: %kernel.root_dir%/media
             namer: vich_uploader.namer_uniqid
             delete_on_remove:   true  # determines whether to delete file upon removal of entity
@@ -112,7 +112,7 @@ liip_imagine:
             filesystem:
                 data_root: %kernel.root_dir%/media/
     filter_sets:
-        user_picture:
+        contact_picture:
             quality: 95
             filters:
                 thumbnail: { size: [51, 51], mode: outbound }

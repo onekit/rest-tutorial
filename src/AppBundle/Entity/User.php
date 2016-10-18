@@ -4,12 +4,10 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serial;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
@@ -57,30 +55,6 @@ class User extends BaseUser
      */
     protected $created;
 
-    /**
-     * @Vich\UploadableField(mapping="user_picture", fileNameProperty="imagePath")
-     *
-     * @var File
-     */
-    public $image;
-
-    /**
-     * @var string
-     *
-     * @var string $imagePath
-     * @ORM\Column(name="image_path", type="string", length=64, nullable=true)
-     */
-    protected $imagePath;
-
-    /**
-     * @var string
-     *
-     * @var string $imagePath
-     * @ORM\Column(name="image_url", type="string", length=255, nullable=true)
-     * @Serial\SerializedName("image")
-     * @Serial\Groups({"user_picture"})
-     */
-    protected $imageUrl;
 
     /**
      * @Serial\VirtualProperty()
@@ -165,44 +139,6 @@ class User extends BaseUser
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImagePath()
-    {
-        return $this->imagePath;
-    }
-
-    /**
-     * @param string $imagePath
-     * @return $this
-     */
-    public function setImagePath($imagePath)
-    {
-        $this->imagePath = $imagePath;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
-    }
-
-    /**
-     * @param string $imageUrl
-     * @return $this
-     */
-    public function setImageUrl($imageUrl)
-    {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
     }
 
 }

@@ -6,9 +6,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation as Serial;
-use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 
 /**
  * Contact
@@ -84,21 +84,19 @@ class Contact
      */
     public $details;
 
-//    /**
-//     * @var string $imagePath Image name
-//     * @ORM\Column(type="string", length=255)
-//     *
-//     * @Serial\SerializedName("image")
-//     * @Fresh\VichSerializableField("imageFile", includeHost=false)
-//     */
-//    protected $imageName;
-//
-//    /**
-//     * @Vich\UploadableField(mapping="contact_image_mapping", fileNameProperty="imageName")
-//     * @var File $imageFile
-//
-//     */
-//    public $imageFile;
+    /**
+     * @Serial\Exclude
+     * @Vich\UploadableField(mapping="contact_picture", fileNameProperty="imageName")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Fresh\VichSerializableField("imageFile")
+     */
+    private $imageName;
 
 
     /**
@@ -209,6 +207,45 @@ class Contact
     public function setWhen($when)
     {
         $this->when = $when;
+    }
+
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     * @return Contact
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param string $imageName
+     *
+     * @return Contact
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
     }
 
 }
