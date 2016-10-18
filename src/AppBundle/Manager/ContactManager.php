@@ -41,7 +41,9 @@ class ContactManager extends ApiManager
                     'AppBundle:Mail:contactMail.html.twig',
                     [
                         'email' => $contact->getEmail(),
-                        'body' => $contact->getBody()
+                        'title' => $contact->getTitle(),
+                        'body' => $contact->getBody(),
+                        'details' => $contact->getDetails()
                     ]
                 )
             );
@@ -66,12 +68,17 @@ class ContactManager extends ApiManager
         return $contact;
     }
 
-    public function update(Contact $contact, $flush = false)
+
+    public function update(Contact $contact, CreateContact $createContact)
     {
-        $this->em->persist($contact);
-        if ($flush) {
-            $this->em->flush();
-        }
+        $contact->setTitle($createContact->title);
+        $contact->setEmail($createContact->email);
+        $contact->setWhen($createContact->when);
+        $contact->setCity($createContact->city);
+        $contact->setBody($createContact->body);
+        $contact->setDetails($createContact->details);
+        $this->em->flush();
+        return $contact;
     }
 
     public function getList()
@@ -82,7 +89,7 @@ class ContactManager extends ApiManager
 
     public function order($column, $direction)
     {
-        //$this->qb->orderBy('c.'.$column, $direction);
+        $this->qb->orderBy('c.'.$column, $direction);
         return $this;
     }
 }
