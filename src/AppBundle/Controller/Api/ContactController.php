@@ -7,10 +7,6 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Sensio;
 use AppBundle\Annotation as App;
 
-use FOS\RestBundle\Controller\Annotations\View as ViewAnnotation;
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\Context\Context;
-
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use AppBundle\Entity\Contact;
@@ -18,7 +14,8 @@ use AppBundle\Manager\ContactManager;
 use AppBundle\Entity\Input\CreateContact;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -97,18 +94,22 @@ class ContactController extends RestController
      *
      * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Get("", name="api_get_contact_list")
-     * @App\RestResult(paginate=true, sort={"id", "when_datetime"})
-     * @Rest\View(serializerGroups={"default"})
-     *
-     * @param $page
-     * @param $limit
-     * @param $order
-     * @param $direction
+     * @App\RestResult(paginate=true, sort={"id"})
+     * @Rest\View(serializerGroups={"default","contact_list"})
+     * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page")
+     * @Rest\QueryParam(name="limit", requirements="\d+", default="50", description="Results on page")
+     * @Rest\QueryParam(name="orderBy", requirements="\d+", default="id", description="Order by")
+     * @Rest\QueryParam(name="orderDir", requirements="\d+", default="ASC", description="Order direction")
+
+     * @param string $page
+     * @param string $limit
+     * @param string $orderBy
+     * @param string $orderDir
      * @return Contact[]
      */
-    public function getContactListAction($order, $direction, $page, $limit)
+    public function getContactListAction($page, $limit, $orderBy, $orderDir)
     {
-        return $this->contactManager->getList()->order($order, $direction)->paginate($page, $limit);
+        return $this->contactManager->getList()->order($orderBy, $orderDir)->paginate($page, $limit);
     }
 
 

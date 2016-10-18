@@ -27,10 +27,10 @@ class AppKernel extends Kernel
             new Liip\ImagineBundle\LiipImagineBundle(),
 
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new JMS\AopBundle\JMSAopBundle(),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Lexik\Bundle\MaintenanceBundle\LexikMaintenanceBundle(),

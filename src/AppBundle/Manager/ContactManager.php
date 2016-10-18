@@ -21,6 +21,7 @@ class ContactManager extends ApiManager
     public function __construct(EntityManager $entityManager, $adminEmail, $container)
     {
         parent::__construct($entityManager);
+        $this->adminEmail = $adminEmail;
         $this->container = $container;
     }
 
@@ -84,6 +85,7 @@ class ContactManager extends ApiManager
     public function getList()
     {
         $this->qb = $this->repo->getListQB();
+
         return $this;
     }
 
