@@ -2,9 +2,11 @@
 namespace AppBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use AppBundle\Entity\Input\CreateContact;
 use AppBundle\Repository\ContactRepository;
 use AppBundle\Entity\Contact;
+use AppBundle\Entity\Input\CreateContact;
+use AppBundle\Entity\Input\ContactPicture;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ContactManager extends ApiManager
 {
@@ -16,13 +18,29 @@ class ContactManager extends ApiManager
 
     private $adminEmail;
 
-    protected $container;
+    /**
+     * @var \Swift_Mailer
+     */
+    protected $mailer;
 
-    public function __construct(EntityManager $entityManager, $adminEmail, $container)
+    /**
+     * @var \Twig_Environment
+     */
+    protected $templating;
+
+    /**
+     * @var string
+     */
+    protected $mediaPath;
+
+    public function __construct(EntityManager $entityManager, $adminEmail, \Swift_Mailer $mailer, $mediaPath, \Twig_Environment $templating)
     {
         parent::__construct($entityManager);
         $this->adminEmail = $adminEmail;
-        $this->container = $container;
+        $this->mailer = $mailer;
+        $this->mediaPath = realpath($mediaPath);
+        $this->templating = $templating;
+
     }
 
     protected function setRepository()
@@ -38,7 +56,7 @@ class ContactManager extends ApiManager
             ->setFrom($contact->getEmail())
             ->setTo($this->adminEmail)
             ->setBody(
-                $this->container->get('templating')->render(
+                $this->templating->render(
                     'AppBundle:Mail:contactMail.html.twig',
                     [
                         'email' => $contact->getEmail(),
@@ -48,7 +66,7 @@ class ContactManager extends ApiManager
                     ]
                 )
             );
-        $this->container->get('mailer')->send($message);
+        $this->mailer->send($message);
         return $contact;
     }
 
@@ -78,7 +96,6 @@ class ContactManager extends ApiManager
         $contact->setCity($createContact->city);
         $contact->setBody($createContact->body);
         $contact->setDetails($createContact->details);
-        $contact->setImageFile($createContact->image);
         $this->em->flush();
         return $contact;
     }
@@ -95,4 +112,21 @@ class ContactManager extends ApiManager
         $this->qb->orderBy('c.'.$column, $direction);
         return $this;
     }
+
+    public function setPicture(Contact $contact, ContactPicture $picture = null)
+    {
+        if (!is_null($picture)) {
+            $image = $picture->image;
+            $fs = new Filesystem();
+            $fullPath = sprintf('%s/contactimage-%u.%s', $this->mediaPath, $contact->getId(), $image->guessExtension());
+            $fs->copy($image->getRealPath(), $fullPath, true);
+            $contact->setImagePath(rtrim($fs->makePathRelative($fullPath, $this->mediaPath), '/'));
+        } else {
+            $contact->setImagePath(null);
+        }
+
+        $this->update($contact, $picture);
+        return $contact;
+    }
+
 }

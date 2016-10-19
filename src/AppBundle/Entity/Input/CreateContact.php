@@ -14,55 +14,48 @@ class CreateContact
 {
     /**
      * @var string $email
+     * @Serial\Type("string")
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Assert\Length(min=2, max=255)
-     * @Serial\Type("string")
      */
     public $email;
 
     /**
      * @var string $title
+     * @Serial\Type("string")
      * @Assert\NotBlank()
      * @Assert\Length(min=2)
-     * @Serial\Type("string")
      */
     public $title;
 
 
     /**
      * @var \DateTime $when
-     * @Assert\NotBlank()
-     * @Assert\DateTime()
      * @Serial\Type("DateTime")
+     * @Assert\NotNull()
+     * @Assert\DateTime()
      */
     public $when;
 
     /**
      * @var string $city
-     * @Assert\NotBlank()
      * @Serial\Type("string")
+     * @Assert\NotBlank()
      */
     public $city;
 
     /**
      * @var string $body
-     * @Assert\NotBlank()
      * @Serial\Type("string")
+     * @Assert\NotBlank()
      */
     public $body;
 
     /**
      * @var string $details
-     * @Assert\NotBlank()
      * @Serial\Type("string")
+     * @Assert\NotBlank()
      */
     public $details;
-
-    /**
-     * @var File $image
-     * @Serial\Type("Symfony\Component\HttpFoundation\File\File")
-     */
-    public $image;
 
 }

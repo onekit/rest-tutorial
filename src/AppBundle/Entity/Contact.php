@@ -6,7 +6,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
-use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use JMS\Serializer\Annotation as Serial;
 
@@ -15,10 +14,8 @@ use JMS\Serializer\Annotation as Serial;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
  * @ORM\Table(name="mailer_contacts")
- * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
- * @Fresh\VichSerializableClass
- */
+  */
 class Contact
 {
     /**
@@ -48,7 +45,6 @@ class Contact
      * @Serial\Type("string")
      */
     public $title;
-
 
     /**
      * @var \DateTime $when
@@ -85,19 +81,29 @@ class Contact
     public $details;
 
     /**
-     * @Serial\Exclude
-     * @Vich\UploadableField(mapping="contact_picture", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="contact_image", fileNameProperty="imagePath")
+     *
      * @var File
      */
-    private $imageFile;
+    public $image;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Fresh\VichSerializableField("imageFile")
+     *
+     * @var string $imagePath
+     * @ORM\Column(name="image_path", type="string", length=64, nullable=true)
      */
-    private $imageName;
+    protected $imagePath;
 
+    /**
+     * @var string
+     *
+     * @var string $imagePath
+     * @ORM\Column(name="image_url", type="string", length=255, nullable=true)
+     * @Serial\SerializedName("image")
+     * @Serial\Groups({"contact_picture"})
+     */
+    protected $imageUrl;
 
     /**
      * Get id
@@ -211,41 +217,41 @@ class Contact
 
 
     /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     * @return Contact
+     * @return string
      */
-    public function setImageFile(File $image = null)
+    public function getImagePath()
     {
-        $this->imageFile = $image;
-        return $this;
+        return $this->imagePath;
     }
 
     /**
-     * @return File|null
+     * @param string $imagePath
+     * @return $this
      */
-    public function getImageFile()
+    public function setImagePath($imagePath)
     {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param string $imageName
-     *
-     * @return Contact
-     */
-    public function setImageName($imageName)
-    {
-        $this->imageName = $imageName;
+        $this->imagePath = $imagePath;
 
         return $this;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getImageName()
+    public function getImageUrl()
     {
-        return $this->imageName;
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     * @return $this
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
     }
 
 }

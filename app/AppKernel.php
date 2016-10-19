@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
-            new Fresh\VichUploaderSerializationBundle\FreshVichUploaderSerializationBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
 
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),

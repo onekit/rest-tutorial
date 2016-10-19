@@ -162,10 +162,12 @@ sensio_framework_extra:
 fos_rest:
     routing_loader:
         default_format: json
-    param_fetcher_listener: force
+    param_fetcher_listener:
+        enabled:  true
+        force:    true
     body_listener:
         decoders:
-            json: fos_rest.decoder.json
+            json: fos_rest.decoder.jsontoform
             form: app.decoder.form
             xml: fos_rest.decoder.xml
     body_converter:
@@ -175,8 +177,8 @@ fos_rest:
     view:
         formats:
             json: true
-            rss: false
-            xml: false
+            rss: true
+            xml: true
         templating_formats:
             html: true
         force_redirects:
