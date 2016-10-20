@@ -28,7 +28,6 @@ class CreateContact
      */
     public $title;
 
-
     /**
      * @var \DateTime $when
      * @Serial\Type("DateTime")
@@ -57,5 +56,4 @@ class CreateContact
      * @Assert\NotBlank()
      */
     public $details;
-
 }

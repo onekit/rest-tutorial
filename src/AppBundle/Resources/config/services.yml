@@ -85,4 +85,3 @@ services:
     arguments: ['@nelmio_api_doc.extractor.handler.fos_rest']
     tags:
       - { name: nelmio_api_doc.extractor.handler }
-
