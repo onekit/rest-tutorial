@@ -2,7 +2,7 @@
     "name": "onekit/mailer-php",
     "license": "MIT",
     "type": "project",
-    "description": "Mailer for Antonio",
+    "description": "REST API tutorial",
     "autoload": {
         "psr-4": { "": "src/" },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
