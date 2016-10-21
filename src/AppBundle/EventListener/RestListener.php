@@ -4,7 +4,6 @@ namespace AppBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Util\ClassUtils;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use AppBundle\Annotation\RestResult;

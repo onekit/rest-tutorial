@@ -3,7 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: doctrine_extensions.yml }
-    - { resource: "@AppBundle/Resources/config/services.yml" }
 
 framework:
     #esi:             ~
@@ -50,13 +49,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
-
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
@@ -93,8 +85,6 @@ fos_user:
     use_listener: true
     service:
         mailer: fos_user.mailer.twig_swift
-
-
 
 vich_uploader:
     db_driver: orm
@@ -150,8 +140,6 @@ jms_translation:
             excluded_dirs: [cache, data, logs, "Features"]
             output_format: yml
 
-
-
 sensio_framework_extra:
     router:   { annotations: true }
     request:  { converters: true, auto_convert: true }
@@ -168,7 +156,6 @@ fos_rest:
     body_listener:
         decoders:
             json: fos_rest.decoder.jsontoform
-            form: app.decoder.form
             xml: fos_rest.decoder.xml
     body_converter:
         enabled: true
@@ -177,8 +164,7 @@ fos_rest:
     view:
         formats:
             json: true
-            rss: true
-            xml: true
+            xml: false
         templating_formats:
             html: true
         force_redirects:
@@ -189,7 +175,7 @@ fos_rest:
     exception:
         enabled: true
     service:
-        view_handler:         fos_rest.view_handler.default
+        view_handler: fos_rest.view_handler.default
 
 lexik_maintenance:
     authorized:
@@ -219,7 +205,7 @@ lexik_jwt_authentication:
     token_ttl:        %jwt_token_ttl%
 
 nelmio_api_doc:
-    name: 'REST Mailer: API documentation'
+    name: 'REST API: End points'
     sandbox:
         authentication:
             name: Authorization

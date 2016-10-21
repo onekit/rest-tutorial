@@ -153,7 +153,7 @@ class ContactController extends RestController
      * @Sensio\Security("has_role('ROLE_ADMIN')")
      * @Rest\Post("/{id}/picture", name="api_post_contact_picture")
      * @Sensio\ParamConverter("contact", converter="doctrine.orm")
-     * @Sensio\ParamConverter("picture", converter="api.converter.contact_picture")
+     * @Sensio\ParamConverter("picture", class="AppBundle:Input\ContactPicture", converter="")
      * @Rest\View(serializerGroups={"default", "contact_picture"})
      *
      * @param Contact $contact
