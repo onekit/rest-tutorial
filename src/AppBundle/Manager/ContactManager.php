@@ -80,7 +80,8 @@ class ContactManager extends ApiManager
         $contact->setBody($createContact->body);
         $contact->setDetails($createContact->details);
 
-        //$this->mail($contact); //send email on create new contact
+        //send email to admin about creation new contact
+        //$this->mail($contact);
 
         $this->em->persist($contact);
         $this->em->flush();
@@ -88,6 +89,11 @@ class ContactManager extends ApiManager
     }
 
 
+    /**
+     * @param Contact $contact
+     * @param CreateContact $createContact|null
+     * @return Contact
+     */
     public function update(Contact $contact, CreateContact $createContact)
     {
         $contact->setTitle($createContact->title);
