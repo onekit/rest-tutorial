@@ -17,10 +17,6 @@ class UserRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('u')
             ->where('u.enabled = :enabled');
-        if (in_array('keyword', $criteria) && $criteria['keyword'] != '') {
-          $qb->andWhere('upper(u.firstname) LIKE upper(:keyword)')
-            ->setParameter('keyword', '%' . $criteria['keyword'] . '%');
-        }
         $qb->setParameter('enabled', $criteria['enabled'])
           ->setMaxResults($criteria['limit'])
           ->setFirstResult(($criteria['page'] - 1) * $criteria['limit'])
@@ -51,18 +47,5 @@ class UserRepository extends EntityRepository
         $qb->orderBy("u.created", "desc");
         return $qb;
     }
-
-    public function autocompleteQB($keyword, $page, $limit)
-    {
-        $qb = $this->createQueryBuilder('u')
-            ->select('u.id, u.lastname as value')
-            ->where('u.lastname LIKE :keyword')
-            ->andWhere('u.enabled = true')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit)
-            ->setParameter('keyword', '%'.$keyword.'%');
-        return $qb;
-    }
-
 
 }

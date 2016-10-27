@@ -87,21 +87,21 @@ class UserController extends RestController
      * @Sensio\Security("has_role('ROLE_SUPER_ADMIN')")
      * @Rest\Get("", name="api_get_user_list")
      * @App\RestResult(paginate=true, sort={"id", "username", "email", "created"})
-     * @Rest\View(serializerGroups={"default"})
+     * @Rest\View(serializerGroups={"default","user_list"})
      * @Rest\QueryParam(name="page", requirements="\d+", default="1", description="Page")
      * @Rest\QueryParam(name="limit", requirements="\d+", default="50", description="Results on page")
      * @Rest\QueryParam(name="orderBy", default="id", description="Order by")
      * @Rest\QueryParam(name="orderDir", default="ASC", description="Order direction")
      *
-     * @param $page
-     * @param $limit
-     * @param $order
-     * @param $direction
+     * @param string $page
+     * @param string $limit
+     * @param string $orderBy
+     * @param string $orderDir
      * @return User[]
      */
-    public function getUserListAction($page, $limit, $order, $direction)
+    public function getUserListAction($page, $limit, $orderBy, $orderDir)
     {
-        return $this->userManager->getList()->order($order, $direction)->paginate($page, $limit);
+        return $this->userManager->getList()->order($orderBy, $orderDir)->paginate($page, $limit);
     }
 
     /**

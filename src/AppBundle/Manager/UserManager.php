@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use FOS\UserBundle\Doctrine\UserManager as FOSUserManager;
 use FOS\UserBundle\Util\UserManipulator;
 
-class UserManager
+class UserManager extends ApiManager
 {
     /**
      * @var UserRepository
      */
-    private $repo;
+    protected $repo;
     private $formFactory;
     private $requestStack;
     private $searchCriteria;
@@ -37,6 +37,11 @@ class UserManager
     public function getRepository()
     {
         return $this->repo;
+    }
+
+    protected function setRepository()
+    {
+        $this->repo = $this->em->getRepository('AppBundle:User');
     }
 
 
@@ -60,11 +65,17 @@ class UserManager
         }
 
     }
-
-    public function getUserList()
+    public function getList()
     {
-        $data = $this->repo->getUserListQB($this->searchCriteria)->getQuery()->getResult();
-        return $this->handleResponseByData($data);
+        $this->qb = $this->repo->getListQB();
+
+        return $this;
+    }
+
+    public function order($column, $direction)
+    {
+        $this->qb->orderBy('u.'.$column, $direction);
+        return $this;
     }
 
     public function getEnabledUserById($id)
@@ -151,21 +162,10 @@ class UserManager
         }
     }
 
-    public function delete(User $user)
-    {
-        $this->em->remove($user);
-        $this->em->flush();
-    }
-
     public function disable(User $user)
     {
         $user->setEnabled(false);
         $this->update($user,true);
-    }
-
-    public function autocomplete($keyword, $page, $limit)
-    {
-        return $this->repo->autocompleteQB($keyword, $page, $limit)->getQuery()->getResult();
     }
 
     private function handleResponseByData($data)
