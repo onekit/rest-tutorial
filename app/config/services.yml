@@ -7,6 +7,7 @@ services:
       - '@fos_user.util.username_canonicalizer'
       - '@fos_user.util.email_canonicalizer'
       - '@doctrine.orm.entity_manager'
+      - '%fos_user.model.user.class%'
 
   api.fos_user_manipulator:
     class: FOS\UserBundle\Util\UserManipulator
@@ -18,7 +19,7 @@ services:
 
   manager.user:
       class:        AppBundle\Manager\UserManager
-      arguments:    ['@doctrine.orm.entity_manager', '@form.factory', '@request_stack']
+      arguments:    ['@doctrine.orm.entity_manager', '@form.factory', '@request_stack', '@api.fos_user_manipulator', '@api.fos_user_manager']
 
   app.handler.when:
       class: AppBundle\Handler\WhenHandler

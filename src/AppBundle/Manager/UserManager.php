@@ -2,6 +2,7 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Input\CreateUser;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Annotation\RestResult;
 use AppBundle\Entity\User;
@@ -10,6 +11,8 @@ use AppBundle\Entity\Output\Result;
 use AppBundle\Form\Type\UserFormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
+use FOS\UserBundle\Doctrine\UserManager as FOSUserManager;
+use FOS\UserBundle\Util\UserManipulator;
 
 class UserManager
 {
@@ -21,18 +24,30 @@ class UserManager
     private $requestStack;
     private $searchCriteria;
 
+    /**
+     * @var UserManipulator
+     */
+    protected $userManipulator;
+
+    /**
+     * @var FOSUserManager
+     */
+    protected $userManager;
+
     public function getRepository()
     {
         return $this->repo;
     }
 
 
-    public function __construct(ObjectManager $em, FormFactory $formFactory, RequestStack $requestStack)
+    public function __construct(ObjectManager $em, FormFactory $formFactory, RequestStack $requestStack, UserManipulator $userManipulator, FOSUserManager $userManager)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->repo = $em->getRepository('AppBundle:User');
+        $this->userManipulator = $userManipulator;
+        $this->userManager = $userManager;
 
         /* criteria for query */
         $request = $this->requestStack->getCurrentRequest();
@@ -96,6 +111,36 @@ class UserManager
     public function findUserByUsername($username)
     {
         return $this->repo->findOneBy(['username' => $username]);
+    }
+
+    /**
+     * @param CreateUser $createUser
+     * @return User
+     */
+    public function create(CreateUser $createUser)
+    {
+        /** @var User $user */
+        $user = $this->userManipulator->create($createUser->username, $createUser->password, $createUser->email, true, $createUser->is_admin);
+        $user->setLanguage($createUser->language);
+        $this->userManager->updateUser($user);
+        $this->userManager->reloadUser($user);
+        return $user;
+    }
+
+
+    /**
+     * @param User $user
+     * @param CreateUser $createUser
+     * @return User
+     */
+    public function updateUser(User $user, CreateUser $createUser)
+    {
+        $user->setUsername($createUser->username);
+        $user->setEmail($createUser->email);
+        $user->setPlainPassword($createUser->password);
+        $user->setSuperAdmin($createUser->is_admin);
+        $this->userManager->updateUser($user);
+        return $user;
     }
 
     public function update(User $user, $flush = false)

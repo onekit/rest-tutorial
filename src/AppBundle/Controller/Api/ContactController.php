@@ -50,6 +50,7 @@ class ContactController extends RestController
      * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Post("", name="api_post_contact")
      * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
+     * @Sensio\ParamConverter("picture", converter="api.converter.contact_picture")
      * @Rest\View(statusCode=201, serializerGroups={"default", "contact"})
      *
      * @param CreateContact $createContact
