@@ -11,25 +11,28 @@ class ContactPictureListener
     /**
      * @var CacheManager
      */
-    protected $imagineCacheManager;
+    protected $cacheManager;
 
-    public function __construct(CacheManager $cacheManager)
+    public function __construct($cacheManager)
     {
-        $this->imagineCacheManager = $cacheManager;
+        $this->cacheManager = $cacheManager;
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof Contact) {
             $entity = $this->updateImageUrl($entity);
             $args->getEntityManager()->flush($entity);
         }
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+// when delete entity so remove all thumbnails related
+    public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof Contact) {
             $entity = $this->updateImageUrl($entity);
             $args->getEntityManager()->flush($entity);
@@ -39,11 +42,10 @@ class ContactPictureListener
     protected function updateImageUrl(Contact $contact)
     {
         if (!is_null($contact->getImagePath())) {
-            $this->imagineCacheManager->remove($contact->getImagePath());
-            $contact->setImageUrl($this->imagineCacheManager->getBrowserPath($contact->getImagePath(), 'contact_picture'));
+            $this->cacheManager->remove($contact->getImagePath());
+            $contact->setImageUrl($this->cacheManager->getBrowserPath($contact->getImagePath(), 'contact_picture'));
         } else {
             $contact->setImageUrl(sprintf('https://www.gravatar.com/avatar/%s?d=mm&s=51', md5($contact->getEmail())));
         }
-        return $contact;
     }
 }

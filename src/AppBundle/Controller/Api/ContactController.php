@@ -153,19 +153,15 @@ class ContactController extends RestController
      * @Sensio\Security("has_role('ROLE_ADMIN')")
      * @Rest\Post("/{id}/picture", name="api_post_contact_picture")
      * @Sensio\ParamConverter("contact", converter="doctrine.orm")
-     * @Sensio\ParamConverter("picture", class="AppBundle:Input\ContactPicture", converter="")
+     * @Sensio\ParamConverter("picture", converter="api.converter.contact_picture")
      * @Rest\View(serializerGroups={"default", "contact_picture"})
      *
      * @param Contact $contact
      * @param ContactPicture $picture
-     * @param ConstraintViolationListInterface $constraints
      * @return Contact|Response
      */
-    public function postPictureAction(Contact $contact, ContactPicture $picture, ConstraintViolationListInterface $constraints)
+    public function postPictureAction(Contact $contact, ContactPicture $picture)
     {
-        if ($constraints->count()) {
-            return $this->handleError('Validation errors', $constraints);
-        }
         $contact = $this->contactManager->setPicture($contact, $picture);
         return $contact;
     }

@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @DoctrineAssert\UniqueEntity("username")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(
- *      name = "mailer_user",
+ *      name = "rest_user",
  *      indexes = {
  *          @ORM\Index(name="created_idx", columns={"created"})
  *      }

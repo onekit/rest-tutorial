@@ -106,6 +106,17 @@ class ContactManager extends ApiManager
         return $contact;
     }
 
+    /**
+     * @param Contact $contact
+     * @return Contact
+     */
+    public function updateContact(Contact $contact)
+    {
+        $this->em->persist($contact);
+        $this->em->flush();
+        return $contact;
+    }
+
     public function getList()
     {
         $this->qb = $this->repo->getListQB();
@@ -131,7 +142,7 @@ class ContactManager extends ApiManager
             $contact->setImagePath(null);
         }
 
-        $this->update($contact, $picture);
+        $this->updateContact($contact);
         return $contact;
     }
 

@@ -1,1 +1,1 @@
-php app/console server:run
+php app/console server:run localhost:8080

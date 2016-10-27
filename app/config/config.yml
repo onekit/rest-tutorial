@@ -105,24 +105,7 @@ liip_imagine:
         contact_picture:
             quality: 95
             filters:
-                thumbnail: { size: [51, 51], mode: outbound }
-        icon:
-            quality: 95
-            filters:
-                thumbnail: { size: [128, 128], mode: outbound }
-        thumb:
-            quality: 95
-            filters:
-                thumbnail: { size: [460, 460], mode: outbound }
-
-        thumb_small:
-            quality: 95
-            filters:
-                thumbnail: { size: [800, 600], mode: outbound }
-        thumb_large:
-            quality: 98
-            filters:
-                thumbnail: { size: [1200, 1080], mode: outbound }
+                thumbnail: { size: [256, 256], mode: outbound }
 
 jms_di_extra:
     locations:
@@ -165,6 +148,7 @@ fos_rest:
         formats:
             json: true
             xml: false
+            rss: false
         templating_formats:
             html: true
         force_redirects:
@@ -230,8 +214,6 @@ jms_serializer:
     handlers:
         datetime:
             default_format: 'Y-m-d\TH:i:s'
-
-
 
 fos_user:
     from_email:

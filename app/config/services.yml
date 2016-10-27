@@ -45,8 +45,14 @@ services:
     class: AppBundle\EventListener\ContactPictureListener
     arguments: ['@liip_imagine.cache.manager']
     tags:
-      - { name: doctrine.event_listener, event: postPersist }
       - { name: doctrine.event_listener, event: postUpdate }
+      - { name: doctrine.event_listener, event: preRemove }
+
+  api.converter.contact_picture:
+    class: AppBundle\Request\ContactPictureParamConverter
+    arguments: [@fos_rest.validator]
+    tags:
+      - { name: request.param_converter, converter: api.converter.contact_picture }
 
   api.event.rest_handle_listener:
     class: AppBundle\EventListener\RestListener

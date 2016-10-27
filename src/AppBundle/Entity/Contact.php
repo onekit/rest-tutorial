@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation as Serial;
  * Contact
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContactRepository")
- * @ORM\Table(name="mailer_contacts")
+ * @ORM\Table(name="rest_contacts")
  * @Vich\Uploadable
   */
 class Contact

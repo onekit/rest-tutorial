@@ -12,13 +12,6 @@ class ContactPictureParamConverter implements ParamConverterInterface
 {
     protected $validator;
 
-    /**
-     * The name of the argument on which the ConstraintViolationList will be set.
-     *
-     * @var null|string
-     */
-    protected $validationErrorsArgument;
-
     public function supports(ParamConverter $configuration)
     {
         if (null === $configuration->getClass()) {
@@ -33,18 +26,10 @@ class ContactPictureParamConverter implements ParamConverterInterface
         $picture = new ContactPicture();
         $picture->image = $request->files->get('image');
         $request->attributes->set($configuration->getName(), $picture);
-        $request->attributes->set(
-            $this->validationErrorsArgument,
-            $this->validator->validate($picture)
-        );
     }
 
-    function __construct(ValidatorInterface $validator, $validationErrorsArgument)
+    function __construct(ValidatorInterface $validator)
     {
         $this->validator = $validator;
-        $this->validationErrorsArgument = $validationErrorsArgument;
     }
 }
-
-
-
