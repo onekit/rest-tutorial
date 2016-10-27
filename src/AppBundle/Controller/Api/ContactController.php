@@ -47,6 +47,7 @@ class ContactController extends RestController
     /**
      * @ApiDoc(input = "AppBundle\Entity\Input\CreateContact", views = {"default", "admin"})
      *
+     * @Sensio\Security("has_role('ROLE_USER')")
      * @Rest\Post("", name="api_post_contact")
      * @Sensio\ParamConverter("createContact", converter = "fos_rest.request_body")
      * @Rest\View(statusCode=201, serializerGroups={"default", "contact"})
