@@ -1,5 +1,5 @@
 imports:
-    - { resource: config_dev.yml }
+    - { resource: config_prod.yml }
 
 framework:
     test: ~
@@ -13,4 +13,12 @@ web_profiler:
     intercept_redirects: false
 
 swiftmailer:
+    spool:
+       type: file
+       path: "%kernel.cache_dir%/swiftmailer/spool"
     disable_delivery: true
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        dbname:   "%database_name%_test"
