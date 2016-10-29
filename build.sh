@@ -14,4 +14,4 @@ chmod 777 web/media -R
 chmod 755 build.sh
 chmod 755 test.sh
 
-php app/console security:check
+php security-checker.phar security:check
