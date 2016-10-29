@@ -51,7 +51,7 @@ services:
 
   api.converter.contact_picture:
     class: AppBundle\Request\ContactPictureParamConverter
-    arguments: [@fos_rest.validator]
+    arguments: ['@fos_rest.validator']
     tags:
       - { name: request.param_converter, converter: api.converter.contact_picture }
 
