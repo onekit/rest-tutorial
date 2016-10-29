@@ -13,7 +13,7 @@ class Extension implements ExtensionInterface
     {
         $parser = new \Symfony\Component\Yaml\Parser();
         $data = $parser->parse(file_get_contents('app/config/parameters.yml'));
-        $container->setParameter('rezzza.json_api.rest.base_url', sprintf('http://%s/app_test.php/', $data['parameters']['http_host']));
+        $container->setParameter('rezzza.json_api.rest.base_url', sprintf('http://%s/app_dev.php/', $data['parameters']['http_host']));
     }
 
     public function configure(ArrayNodeDefinition $builder)
