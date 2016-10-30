@@ -7,5 +7,4 @@ php app/console doctrine:schema:create
 php app/console assets:install web --symlink
 php app/console assetic:dump
 php app/console doctrine:fixtures:load --no-interaction
-php security-checker.phar security:check composer.lock
 

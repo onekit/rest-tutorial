@@ -13,3 +13,6 @@ default:
       contexts:
         - Rezzza\RestApiBehatExtension\Json\JsonContext
         - AppBundle\Features\Context\RestContext
+      features:
+            paths:    [ %paths.base%/features ]
+            contexts: [ RestContext ]
