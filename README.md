@@ -38,6 +38,18 @@ php composer.phar install
 Answer on questions after downloading. It will configure connections to database and let choose own parameters.  
 
 
+```
+#!sh
+
+php app/console doctrine:database:create
+php app/console doctrine:schema:create
+php app/console assets:install web --symlink
+php app/console assetic:dump
+php app/console doctrine:fixtures:load --no-interaction
+```
+
+
+
 If you launch it locally, then can test fast with internal http-server.
 
 ```
@@ -48,6 +60,3 @@ php app/console server:run localhost:8080
 ```
 
 More detailed explanations see on video: https://www.youtube.com/watch?v=nz1qudAh5hk
-
-
-
