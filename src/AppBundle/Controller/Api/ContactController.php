@@ -11,8 +11,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use AppBundle\Entity\Contact;
 use AppBundle\Entity\Input\ContactPicture;
-use AppBundle\Manager\ContactManager;
 use AppBundle\Entity\Input\CreateContact;
+use AppBundle\Manager\ContactManager;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -139,7 +139,7 @@ class ContactController extends RestController
      */
     public function deleteContactAction(Contact $contact)
     {
-        $this->contactManager->delete($contact);
+        return $this->contactManager->delete($contact);
     }
 
 

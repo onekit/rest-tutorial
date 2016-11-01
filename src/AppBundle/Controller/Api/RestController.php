@@ -23,7 +23,7 @@ abstract class RestController extends FOSRestController
     {
         /** @var Request $request */
         $request = $this->get('request');
-        list($controller, $action) = explode("::", $request->attributes->get('_controller'));
+        list($controller) = explode("::", $request->attributes->get('_controller'));
         return $this->forward(sprintf('%s::errorAction', $controller), array(
             'message' => $message,
             'data' => $data,
