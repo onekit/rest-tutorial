@@ -1,20 +1,17 @@
-FROM debian:jessie
+FROM php:7.0.12-fpm
 
-RUN apt-get update && apt-get install -y nginx nano vim
+MAINTAINER Aliaksandr Harbunou <onekit@gmail.com>
 
-ADD conf/nginx.conf /etc/nginx/
-ADD conf/symfony.conf /etc/nginx/sites-available/
+# Install dependencies
+RUN apt-get update && apt-get install -y
+RUN docker-php-ext-configure opcache --enable-opcache \
+    && docker-php-ext-install opcache
 
-RUN ln -s /etc/nginx/sites-available/symfony.conf /etc/nginx/sites-enabled/symfony
-RUN rm /etc/nginx/sites-enabled/default
+#its required for composer
+RUN apt-get install -y git
 
-RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
+# Copy application
+ADD . /var/www/html
 
-RUN usermod -u 1000 www-data
-
-WORKDIR /var/www/symfony
-
-CMD ["nginx"]
-
-EXPOSE 80
-EXPOSE 443
+WORKDIR /var/www/html
+CMD [ "php", "app/check.php" ]
