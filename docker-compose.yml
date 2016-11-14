@@ -1,41 +1,43 @@
 version: '2'
+
 services:
-  web:
-      image: nginx:latest
-      ports:
-          - "80:80"
-      volumes:
-          - ./site.conf:/etc/nginx/conf.d/site.conf
-      # Add the volumes from the PHP container, as Nginx needs access to your project files
-      volumes_from:
-          - php
-      links:
-          - php
-
+  nginx:
+    image: nginx:latest
+    networks:
+      - default
+    ports:
+      - "80:80"
+    volumes:
+      - ./app/config/docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
+      - .:/app
+      - ./log/nginx:/var/log/nginx
   php:
-      image: php:7-fpm
-      volumes:
-          # I changed to the path that is specified in your site.conf file
-          - .:/var/www/html
-
+    build: ./app/config/docker/php-fpm-7
+    networks:
+      - default
+    volumes:
+      - ./log/php-fpm:/var/log/php-fpm
+      - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
+      - .:/app
   db:
-     image: mysql
-     ports:
-          - 3306
-     environment:
-          - MYSQL_ROOT_PASSWORD=12345
-          - MYSQL_USER=root
-          - MYSQL_PASSWORD=12345
-          - MYSQL_DATABASE=restapi
-     volumes:
-          - db:/var/lib/mysql:rw
-     networks:
-          - default
-     dns_search:
-          - db
-
-volumes:
-  db: {}
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=your_user
+      - MYSQL_PASSWORD=12345
+      - MYSQL_DATABASE=restapi
+    volumes:
+      - "db:/var/lib/mysql:rw"
+    networks:
+      - default
+    dns_search:
+      - db
 
 networks:
   default: {}
+
+volumes:
+  db: {}
