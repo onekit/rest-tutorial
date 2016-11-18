@@ -2,42 +2,52 @@ version: '2'
 
 services:
   nginx:
-    image: nginx:latest
+    image: nginx
+    volumes:
+      - "app-files:/app/web"
+      - ./app/config/docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
     networks:
-      - default
+      - front
+      - back
     ports:
-      - "80:80"
-    volumes:
-      - ./app/config/docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
-      - .:/app
-      - ./log/nginx:/var/log/nginx
-  php:
-    build: ./app/config/docker/php-fpm-7
-    networks:
-      - default
-    volumes:
-      - ./log/php-fpm:/var/log/php-fpm
-      - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
-      - .:/app
+      - "8080:80"
+    environment:
+      - "PHP_FPM_HOST=php:9000"
+      - "PHP_FPM_ROOT_DIR=/app/web"
+
   db:
-    image: mysql:latest
+    image: mysql:8.0
+    volumes:
+      - "app-db:/var/lib/mysql:rw"
     ports:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_USER=your_user
+      - MYSQL_USER=symfony
       - MYSQL_PASSWORD=12345
       - MYSQL_DATABASE=restapi
-    volumes:
-      - "db:/var/lib/mysql:rw"
     networks:
-      - default
-    dns_search:
+      - back
+
+  php:
+    build: .
+    volumes:
+      - "app-files:/app/web"
+      - ./log/php-fpm:/var/log/php-fpm
+      - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
+      - .:/app
+    networks:
+      - back
+    depends_on:
       - db
 
 networks:
-  default: {}
+  front: {}
+  back: {}
 
 volumes:
-  db: {}
+  app-files: {}
+  app-db: {}

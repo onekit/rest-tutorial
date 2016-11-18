@@ -8,9 +8,9 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=5.4.4",
         "symfony/symfony": "^2.8",
-        "doctrine/orm": "2.5.4",
+        "doctrine/orm": "2.5.5",
         "doctrine/doctrine-bundle": "1.6.4",
         "doctrine/data-fixtures": "^1.2",
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
