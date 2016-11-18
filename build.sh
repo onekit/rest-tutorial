@@ -8,7 +8,6 @@ php app/console asset:install
 php app/console assetic:dump
 
 chown www-data:www-data -R /tmp
-chown www-data:www-data -R /logs
 chmod 777 app/cache -R
 chmod 777 app/logs -R
 chmod 777 app/media -R
