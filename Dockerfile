@@ -37,7 +37,4 @@ COPY . /app
 WORKDIR /app
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-
-#RUN php app/console doctrine:database:create
-#RUN php app/console doctrine:schema:create
-#RUN php app/console doctrine:fixtures:load --no-interaction
+ONBUILD php app/console doctrine:fixtures:load --no-interaction
