@@ -11,8 +11,7 @@ services:
     depends_on:
       - php
     networks:
-      mynet:
-        ipv4_address: 172.25.0.101
+      - mynet
     ports:
       - "80:80"
     environment:
@@ -31,8 +30,7 @@ services:
       - MYSQL_PASSWORD=12345
       - MYSQL_DATABASE=restapi
     networks:
-          mynet:
-            ipv4_address: 172.25.0.101
+      - mynet
 
   php:
     build: .
@@ -43,8 +41,7 @@ services:
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
       - .:/app
     networks:
-      mynet:
-        ipv4_address: 172.25.0.101
+      - mynet
     depends_on:
       - db
 
