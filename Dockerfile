@@ -36,4 +36,6 @@ COPY . /app
 WORKDIR /app
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
+RUN chown www-data:www-data -R /app/app/cache
+RUN chown www-data:www-data -R /app/app/logs
 ONBUILD php app/console doctrine:fixtures:load --no-interaction
