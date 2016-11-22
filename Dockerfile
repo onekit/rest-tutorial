@@ -33,7 +33,7 @@ WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 COPY . ./
 RUN composer install --no-interaction
-
+RUN chown www-data:www-data -R /tmp
 
 ENV HOME /app
 
@@ -42,4 +42,4 @@ ONBUILD php app/console doctrine:database:create --if-not-exists
 ONBUILD php app/console doctrine:schema:update --force
 ONBUILD php app/console doctrine:fixtures:load --no-interaction
 ONBUILD chown www-data:www-data -R /app
-ONBUILD chown www-data:www-data -R /tmp
+#ONBUILD chown www-data:www-data -R /tmp
