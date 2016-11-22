@@ -32,7 +32,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 COPY composer.json ./
-RUN composer install --prefer-source --no-interaction --optimize-autoloader
+RUN composer install --no-scripts --no-autoloader
 
 COPY . ./
 
