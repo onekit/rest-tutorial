@@ -17,7 +17,10 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install mbstring && \
     docker-php-ext-install opcache && \
     docker-php-ext-install zip && \
-    docker-php-ext-install exif
+    docker-php-ext-install exif && \
+    ## APCu
+    pecl install apcu && \
+    docker-php-ext-enable apcu
 
 RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) iconv mcrypt \
