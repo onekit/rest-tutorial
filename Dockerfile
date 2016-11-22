@@ -1,5 +1,9 @@
 FROM php:7-fpm
 
+MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
+
+ENV HOME /app
+
 # Install modules
 RUN apt-get update && apt-get install -y \
     git \
@@ -35,11 +39,8 @@ COPY . ./
 RUN composer install --no-interaction
 RUN chown www-data:www-data -R /tmp
 
-ENV HOME /app
-
 
 ONBUILD php app/console doctrine:database:create --if-not-exists
 ONBUILD php app/console doctrine:schema:update --force
 ONBUILD php app/console doctrine:fixtures:load --no-interaction
 ONBUILD chown www-data:www-data -R /app
-#ONBUILD chown www-data:www-data -R /tmp
