@@ -32,8 +32,10 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 COPY composer.json ./
-RUN composer install --no-scripts --no-autoloader
+RUN composer install --no-interaction
 
+
+ENV HOME /app
 COPY . ./
 
 ONBUILD php app/console doctrine:database:create --if-not-exists
