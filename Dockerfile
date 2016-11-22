@@ -29,14 +29,13 @@ RUN apt-get update && apt-get install -y \
 
 ## Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-
-RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin/ --filename=composer
-COPY composer.json ./
-RUN composer install --no-scripts --no-autoloader
-ADD . /app
-
 WORKDIR /app
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+COPY composer.json composer.lock ./
+RUN composer install --prefer-source --no-interaction
+
+COPY . ./
+
 ONBUILD php app/console doctrine:database:create --if-not-exists
 ONBUILD php app/console doctrine:schema:update --force
 ONBUILD php app/console doctrine:fixtures:load --no-interaction
