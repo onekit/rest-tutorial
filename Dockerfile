@@ -36,7 +36,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 COPY . ./
-RUN composer install --no-interaction
+RUN composer install --no-interaction --optimize-autoloader
 RUN chown www-data:www-data -R /tmp
 
 
