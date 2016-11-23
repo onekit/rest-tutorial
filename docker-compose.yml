@@ -14,7 +14,7 @@ services:
       - mynet
     depends_on:
       - "db"
-    entrypoint: ./wait-for-it.sh db:3306
+    entrypoint: ./wait-for-it.sh db:3306 -- ./entrypoint.sh
   db:
     image: mysql:8.0
     volumes:
