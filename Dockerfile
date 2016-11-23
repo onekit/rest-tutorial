@@ -31,10 +31,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
+WORKDIR /app
+
 ## Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+ENV COMPOSER_NO_INTERACTION 1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=. --filename=composer
 
-WORKDIR /app
+
 COPY . ./
-RUN composer install --optimize-autoloader --prefer-dist --no-interaction --verbose
+RUN php composer.phar install --optimize-autoloader
