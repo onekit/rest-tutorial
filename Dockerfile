@@ -33,8 +33,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /app
 
-RUN echo 'alias sf="php app/console"' >> ~/.bashrc
-
 WORKDIR /app
 ## Install Composer
 
@@ -46,6 +44,6 @@ RUN composer install --no-interaction --optimize-autoloader
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
 
-ONBUILD RUN sf doctrine:database:create --if-not-exists
-ONBUILD RUN sf doctrine:schema:update --force
-ONBUILD RUN sf doctrine:fixtures:load --no-interaction
+ONBUILD RUN php app/console doctrine:database:create --if-not-exists
+ONBUILD RUN php app/console doctrine:schema:update --force
+ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
