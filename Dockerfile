@@ -36,4 +36,4 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 ADD . /app
-RUN composer install --no-dev --no-interaction -o
+RUN composer install
