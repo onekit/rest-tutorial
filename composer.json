@@ -42,7 +42,7 @@
         "rezzza/json-api-behat-extension": "^5.1"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
+        "sensio/generator-bundle": "v3.1.1",
         "symfony/phpunit-bridge": "~2.7",
         "raulfraile/ladybug-bundle": "1.0.6",
         "behat/behat": "3.2.1",
