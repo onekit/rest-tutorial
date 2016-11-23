@@ -43,11 +43,7 @@ RUN composer install --no-scripts --no-autoloader
 
 COPY . /app
 
-
 RUN composer dump-autoload --optimize && \
-    composer run-script post-install-cmd && \
-    echo -e '\ndoctrine: {dbal: {path: "%kernel.root_dir%/data/blog.sqlite" }}' >> app/config/config_prod.yml && \
-    rm -rf app/cache/* && \
-    chown -R www-data.www-data app/cache app/logs app/data
+    composer run-script post-install-cmd
 
 USER www-data
