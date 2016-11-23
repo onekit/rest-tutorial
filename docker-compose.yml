@@ -17,7 +17,7 @@ services:
 
   php:
     build: .
-    entrypoint: ./wait-for-it.sh -t 60 --strict db:3306
+    entrypoint: ./wait-for-it.sh db:3306
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
