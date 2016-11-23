@@ -33,14 +33,14 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /app
 
-WORKDIR /app
 ## Install Composer
-
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-RUN composer --version
-RUN composer install --no-interaction --optimize-autoloader
+
+WORKDIR /app
+
+RUN composer install --no-interaction --no-ansi --no-autoloader --no-scripts --no-plugins
+RUN composer dump-autoload --no-interaction --no-ansi --optimize --no-dev
 
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-ONBUILD RUN ./entrypoint.sh
