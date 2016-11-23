@@ -36,5 +36,5 @@ WORKDIR /app
 ## Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=. --filename=composer.phar
 
-ONBUILD ADD . ./
-ONBUILD RUN php composer.phar install --no-interaction
+ADD . ./
+RUN php composer.phar install --no-interaction
