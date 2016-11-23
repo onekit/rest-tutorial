@@ -43,7 +43,6 @@ RUN composer install --no-interaction --optimize-autoloader
 
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-RUN chmod 755 wait-for-it.sh
 
 RUN php app/console doctrine:database:create --if-not-exists
 RUN php app/console doctrine:schema:update --force
