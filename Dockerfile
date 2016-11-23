@@ -32,18 +32,21 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd
 
 COPY . /app
+
+RUN echo 'alias sf="php app/console"' >> ~/.bashrc
+
 WORKDIR /app
 ## Install Composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN cd app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-RUN chmod 777 /usr/local/bin/composer
+RUN composer --version
 
 ONBUILD RUN composer install --no-interaction --no-dev --optimize-autoloader
 ONBUILD RUN chown www-data:www-data -R /app
 ONBUILD RUN chown www-data:www-data -R /tmp
 
-ONBUILD RUN php app/console doctrine:database:create --if-not-exists
-ONBUILD RUN php app/console doctrine:schema:update --force
-ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
+ONBUILD RUN sf doctrine:database:create --if-not-exists
+ONBUILD RUN sf doctrine:schema:update --force
+ONBUILD RUN sf doctrine:fixtures:load --no-interaction
