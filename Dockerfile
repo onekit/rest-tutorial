@@ -40,7 +40,7 @@ RUN cd app
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 RUN chmod 777 /usr/local/bin/composer
 
-ONBUILD RUN composer install --no-interaction
+ONBUILD RUN composer install --no-interaction --no-dev --optimize-autoloader
 ONBUILD RUN chown www-data:www-data -R /app
 ONBUILD RUN chown www-data:www-data -R /tmp
 
