@@ -43,8 +43,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer --version
 RUN composer install --no-interaction --optimize-autoloader
 
-ONBUILD RUN chown www-data:www-data -R /app
-ONBUILD RUN chown www-data:www-data -R /tmp
+RUN chown www-data:www-data -R /app
+RUN chown www-data:www-data -R /tmp
 
 ONBUILD RUN sf doctrine:database:create --if-not-exists
 ONBUILD RUN sf doctrine:schema:update --force

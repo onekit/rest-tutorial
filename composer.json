@@ -76,6 +76,7 @@
         ]
     },
     "config": {
+        "vendor-dir": "vendor",
         "bin-dir": "bin",
         "platform": {
             "php": "5.6.8"
