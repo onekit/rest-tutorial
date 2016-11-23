@@ -31,16 +31,23 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
-COPY . /app
-
 ## Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
 WORKDIR /app
+ENV SYMFONY_ENV prod
 
-RUN composer install --no-interaction --no-ansi --no-autoloader --no-scripts --no-plugins
-RUN composer dump-autoload --no-interaction --no-ansi --optimize --no-dev
+COPY composer.json /app/composer.json
+RUN composer install --no-scripts --no-autoloader
 
-RUN chown www-data:www-data -R /app
-RUN chown www-data:www-data -R /tmp
+COPY . /app
+
+
+RUN composer dump-autoload --optimize && \
+    composer run-script post-install-cmd && \
+    echo -e '\ndoctrine: {dbal: {path: "%kernel.root_dir%/data/blog.sqlite" }}' >> app/config/config_prod.yml && \
+    rm -rf app/cache/* && \
+    chown -R www-data.www-data app/cache app/logs app/data
+
+USER www-data

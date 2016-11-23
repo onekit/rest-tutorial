@@ -13,7 +13,7 @@ services:
     networks:
       - mynet
     depends_on:
-      - "db"
+      - db
   db:
     image: mysql:8.0
     volumes:
