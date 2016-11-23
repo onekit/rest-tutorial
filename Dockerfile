@@ -36,11 +36,10 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 COPY . /app
-RUN cd /app && \
-    composer install --no-interaction
 WORKDIR /app
-RUN chown www-data:www-data -R /app
-RUN chown www-data:www-data -R /tmp
+ONBUILD composer install --no-interaction
+ONBUILD chown www-data:www-data -R /app
+ONBUILD chown www-data:www-data -R /tmp
 
 ONBUILD php app/console doctrine:database:create --if-not-exists
 ONBUILD php app/console doctrine:schema:update --force
