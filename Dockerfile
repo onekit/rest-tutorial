@@ -37,4 +37,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /app
 COPY . ./
-RUN composer install --optimize-autoloader --prefer-dist --no-interaction
+RUN composer install --optimize-autoloader --prefer-dist --no-interaction --verbose
