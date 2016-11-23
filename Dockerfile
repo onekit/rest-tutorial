@@ -2,9 +2,6 @@ FROM php:7-fpm
 
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
 
-ENV HOME /app
-ONBUILD RUN echo "End"
-
 # Install modules
 RUN apt-get update && apt-get install -y \
     git \
@@ -37,7 +34,6 @@ WORKDIR /app
 ## Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_NO_INTERACTION 1
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=. --filename=composer.phar
-
-ADD . ./
-RUN php composer.phar install
+RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
+ADD . /app
+RUN composer install --no-dev --no-interaction -o

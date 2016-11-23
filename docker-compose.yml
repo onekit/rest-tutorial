@@ -1,19 +1,6 @@
 version: '2'
 
 services:
-  php:
-    build: .
-    volumes:
-      - "app-files:/app/web"
-      - ./log/php-fpm:/var/log/php-fpm
-      - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
-      - .:/app
-      - ./web:/app/web
-    networks:
-      - mynet
-    depends_on:
-      - db
   db:
     image: mysql:8.0
     volumes:
@@ -27,6 +14,19 @@ services:
       - MYSQL_DATABASE=restapi
     networks:
       - mynet
+  php:
+    build: .
+    volumes:
+      - "app-files:/app/web"
+      - ./log/php-fpm:/var/log/php-fpm
+      - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
+      - .:/app
+      - ./web:/app/web
+    networks:
+      - mynet
+    depends_on:
+      - db
   nginx:
     image: nginx
     dns:
