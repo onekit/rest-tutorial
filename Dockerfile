@@ -3,6 +3,7 @@ FROM php:7-fpm
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
 
 ENV HOME /app
+ONBUILD RUN echo "End"
 
 # Install modules
 RUN apt-get update && apt-get install -y \
