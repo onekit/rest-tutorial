@@ -34,7 +34,9 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 ## Install Composer
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=. --filename=composer.phar
 
 ADD . ./
-RUN php composer.phar install --no-interaction
+RUN php composer.phar install
