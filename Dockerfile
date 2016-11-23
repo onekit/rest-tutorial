@@ -39,4 +39,4 @@ ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=. --filename=composer.phar
 
 COPY . ./
-RUN php composer.phar install --optimize-autoloader
+ENTRYPOINT["/entrypoint.sh"]
