@@ -43,4 +43,4 @@ RUN composer install --no-interaction --optimize-autoloader
 
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-ENTRYPOINT ["./entrypoint.sh"]
+ONBUILD RUN ./entrypoint.sh
