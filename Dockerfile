@@ -36,4 +36,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --in
 
 WORKDIR /app
 COPY . /app
-#ONBUILD RUN composer install
+RUN composer.phar install --no-ansi --no-interaction --no-progress --optimize-autoloader
