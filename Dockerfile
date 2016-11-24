@@ -37,6 +37,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --in
 COPY . /app
 WORKDIR /app
 #RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-ADD ./enrtypoint.sh /
-RUN chmod +x /enrtypoint.sh
-CMD ["/enrtypoint.sh"]
+ADD ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
