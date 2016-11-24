@@ -38,4 +38,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --in
 WORKDIR /app
 COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-COPY . /app
