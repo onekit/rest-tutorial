@@ -35,5 +35,5 @@ ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 
 WORKDIR /app
-COPY . /
-RUN composer install
+COPY . /app
+ONBUILD RUN composer install
