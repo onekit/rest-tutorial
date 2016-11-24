@@ -38,9 +38,8 @@ ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-ONBUILD RUN chown www-data:www-data -R /app
-ONBUILD RUN chown www-data:www-data -R /tmp
-ONBUILD RUN chmod 777 -R /tmp
-ONBUILD RUN php app/console doctrine:database:create --if-not-exists
-ONBUILD RUN php app/console doctrine:schema:update --force
-ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
+RUN chown www-data:www-data -R /app
+RUN chown www-data:www-data -R /tmp
+RUN php app/console doctrine:database:create --if-not-exists
+RUN php app/console doctrine:schema:update --force
+RUN php app/console doctrine:fixtures:load --no-interaction
