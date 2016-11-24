@@ -40,4 +40,5 @@ COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-
+RUN chmod 755 entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
