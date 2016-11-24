@@ -40,6 +40,6 @@ COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 RUN chown www-data:www-data -R /app
 RUN chown www-data:www-data -R /tmp
-RUN php app/console doctrine:database:create --if-not-exists
-RUN php app/console doctrine:schema:update --force
-RUN php app/console doctrine:fixtures:load --no-interaction
+#ONBUILD RUN php app/console doctrine:database:create --if-not-exists
+#ONBUILD RUN php app/console doctrine:schema:update --force
+#ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
