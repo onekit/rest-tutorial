@@ -26,6 +26,8 @@ services:
       - mynet
     depends_on:
       - db
+    entrypoint: ./wait-for-it.sh db:3306
+
   nginx:
     image: nginx
     dns:
