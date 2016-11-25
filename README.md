@@ -10,6 +10,15 @@ git clone https://bitbucket.org/onekit/rest-tutorial.git
 cd rest-tutorial
 ```
 
+Install with docker locally for demo:
+
+```
+#!sh
+
+./dev.sh
+
+```
+or install it manually:
 
 Get commands from https://getcomposer.org/download/
 and execute:
