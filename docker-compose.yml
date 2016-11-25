@@ -2,6 +2,7 @@ version: '2'
 
 services:
   db:
+    container_name: "rest_db"
     image: mysql:8.0
     volumes:
       - "app-db:/var/lib/mysql:rw"
@@ -16,6 +17,7 @@ services:
     networks:
       - mynet
   php:
+    container_name: "rest_php"
     build: .
     volumes:
       - "app-files:/app/web"
@@ -28,6 +30,7 @@ services:
     depends_on:
       - db
   nginx:
+    container_name: "rest_nginx"
     image: nginx
     dns:
       - 127.0.0.11
