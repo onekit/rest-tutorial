@@ -15,6 +15,7 @@ services:
       - MYSQL_DATABASE=restapi
     networks:
       - mynet
+
   php:
     container_name: "rest_php"
     build: .
@@ -28,6 +29,7 @@ services:
       - mynet
     depends_on:
       - db
+
   nginx:
     container_name: "rest_nginx"
     image: nginx
@@ -45,6 +47,12 @@ services:
     environment:
       - "PHP_FPM_HOST=php:9000"
       - "PHP_FPM_ROOT_DIR=/app/web"
+
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - db
+    command: db:3306
 
 networks:
   mynet:
