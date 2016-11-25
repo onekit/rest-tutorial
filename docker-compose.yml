@@ -52,7 +52,7 @@ services:
     image: dadarek/wait-for-dependencies
     depends_on:
       - db
-    command: db:3306
+    command: 172.25.0.1:3306
 
 networks:
   mynet:
