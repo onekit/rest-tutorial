@@ -49,6 +49,7 @@ services:
       - "PHP_FPM_ROOT_DIR=/app/web"
 
   start_dependencies:
+    container_name: "rest_dep"
     image: dadarek/wait-for-dependencies
     depends_on:
       - db
