@@ -7,4 +7,3 @@ basedir = /usr
 datadir = /var/lib/mysql
 tmpdir = /tmp
 language = /usr/share/mysql/English
-bind-address = 172.25.0.1
