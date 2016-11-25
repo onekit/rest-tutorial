@@ -2,7 +2,6 @@ FROM php:7-fpm
 
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
 
-# Install modules
 RUN apt-get update && apt-get install -y \
     git \
     libfreetype6-dev \
@@ -20,7 +19,6 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install opcache && \
     docker-php-ext-install zip && \
     docker-php-ext-install exif && \
-    ## APCu
     pecl install apcu && \
     docker-php-ext-enable apcu
 
@@ -31,13 +29,18 @@ RUN apt-get update && apt-get install -y \
 
 ENV HOME /app
 WORKDIR /app
-
-## Install Composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_NO_INTERACTION 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
+
 COPY . /app
+
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-RUN chown www-data:www-data -R /app
-RUN chown www-data:www-data -R /tmp
+RUN chown www-data:www-data -R /app /tmp
+ONBUILD RUN sleep 5m
+ONBUILD RUN php app/console doctrine:database:create --if-not-exists
+ONBUILD RUN php app/console doctrine:schema:update --force
+ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
+
+
+
 
