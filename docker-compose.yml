@@ -48,13 +48,6 @@ services:
       - "PHP_FPM_HOST=php:9000"
       - "PHP_FPM_ROOT_DIR=/app/web"
 
-  start_dependencies:
-    container_name: "rest_dep"
-    image: dadarek/wait-for-dependencies
-    depends_on:
-      - db
-    command: 172.25.0.1:3306
-
 networks:
   mynet:
     driver: bridge
