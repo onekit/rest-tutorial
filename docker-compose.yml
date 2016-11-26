@@ -2,6 +2,7 @@ version: '2'
 
 services:
   start_dependencies:
+    container_name: "rest_start"
     image: dadarek/wait-for-dependencies
     depends_on:
       - db
