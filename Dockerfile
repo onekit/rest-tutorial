@@ -39,7 +39,7 @@ RUN chown www-data:www-data -R /app /tmp
 #load fixtures
 #RUN chmod 755 wait-for-it.sh
 #ONBUILD RUN ./wait-for-it.sh -t 0 172.25.0.1:3306 --strict
-#ONBUILD RUN php app/console doctrine:database:create --if-not-exists
-#ONBUILD RUN php app/console doctrine:schema:update --force
-#ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
+ONBUILD RUN php app/console doctrine:database:create --if-not-exists
+ONBUILD RUN php app/console doctrine:schema:update --force
+ONBUILD RUN php app/console doctrine:fixtures:load --no-interaction
 
