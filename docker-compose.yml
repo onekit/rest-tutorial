@@ -1,6 +1,12 @@
 version: '2'
 
 services:
+  start_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - db
+    command: db:3306
+
   db:
     container_name: "rest_db"
     image: mysql:8.0
