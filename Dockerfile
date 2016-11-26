@@ -37,6 +37,7 @@ RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optim
 
 #load fixtures
 RUN chown www-data:www-data -R /app /tmp
+RUN chmod 755 wait-for-it.sh
 ONBUILD RUN ./wait-for-it.sh -t 0 172.25.0.1:3306 --strict
 ONBUILD RUN php app/console doctrine:database:create --if-not-exists
 ONBUILD RUN php app/console doctrine:schema:update --force
