@@ -6,6 +6,7 @@ services:
     image: mysql:8.0
     volumes:
       - "app-db:/var/lib/mysql:rw"
+      - ./app/config/docker/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     ports:
       - "3306:3306"
     environment:
