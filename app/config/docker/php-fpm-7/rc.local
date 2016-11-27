@@ -1,0 +1,3 @@
+#!/bin/sh -e
+/usr/local/bin/fixtures.sh
+exit 0
