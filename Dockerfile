@@ -39,4 +39,4 @@ RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optim
 COPY ./app/config/docker/php-fpm-7/rc.local /etc/rc.local
 COPY ./app/config/docker/php-fpm-7/fixtures.sh /app/fixtures.sh
 RUN chmod 755 /app/fixtures.sh
-RUN chown www-data:www-data -R /app /tmp
+ONBUILD RUN chown www-data:www-data -R /app /tmp
