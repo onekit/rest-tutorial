@@ -36,6 +36,9 @@ COPY . /app
 #install symfony project
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 
-#load fixtures
+#load fixtures with first start
+COPY ./app/config/docker/php-fpm-7/fixtures.sh /usr/local/bin/fixtures.sh
+COPY ./app/config/docker/php-fpm-7/rc.local /etc/rc.local
 RUN chmod 755 /usr/local/bin/fixtures.sh
+
 

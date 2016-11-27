@@ -24,8 +24,6 @@ services:
       - ./log/php-fpm:/var/log/php-fpm
       - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
-      - ./app/config/docker/php-fpm-7/rc.local:/etc/rc.local #fixtures autoload
-      - ./app/config/docker/php-fpm-7/fixtures.sh:/usr/local/bin/fixtures.sh #fixtures autoload
       - ./web:/app/web
       - ./src:/app/src
     networks:
