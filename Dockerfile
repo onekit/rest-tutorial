@@ -34,8 +34,5 @@ COPY . /app
 #install symfony project
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 
-#load fixtures with first start
-COPY ./app/config/docker/php-fpm-7/rc.local /etc/rc.local
-COPY ./app/config/docker/php-fpm-7/fixtures.sh /app/fixtures.sh
-RUN chmod 755 /app/fixtures.sh
+#fix rights for windows
 RUN chown www-data:www-data -R /app /tmp
