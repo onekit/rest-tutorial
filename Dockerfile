@@ -37,4 +37,3 @@ RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optim
 
 #load fixtures with first start
 RUN chown www-data:www-data -R /app /tmp
-RUN echo "@reboot php /app/app/console doctrine:schema:update --force && php app/app/console doctrine:fixtures:load --no-interaction" >> /etc/crontab
