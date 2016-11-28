@@ -36,7 +36,5 @@ COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 
 #load fixtures with first start
-COPY ./app/config/docker/php-fpm-7/fixtures.sh /app/fixtures.sh
-RUN chmod 755 /app/fixtures.sh
 RUN chown www-data:www-data -R /app /tmp
-RUN echo "@reboot /app/fixtures.sh" > /etc/crontab
+RUN echo "@reboot php /app/app/console doctrine:schema:update --force && php app/app/console doctrine:fixtures:load --no-interaction" > /etc/crontab
