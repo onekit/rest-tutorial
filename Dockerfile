@@ -28,7 +28,6 @@ WORKDIR /app
 #composer install
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
-RUN chown www-data:www-data -R /app /tmp
 #copy src to container
 COPY . /app
 
@@ -39,4 +38,4 @@ RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optim
 COPY ./app/config/docker/php-fpm-7/rc.local /etc/rc.local
 COPY ./app/config/docker/php-fpm-7/fixtures.sh /app/fixtures.sh
 RUN chmod 755 /app/fixtures.sh
-ONBUILD RUN chown www-data:www-data -R /app /tmp
+RUN chown www-data:www-data -R /app /tmp
