@@ -5,7 +5,6 @@ MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
 #php modules
 RUN apt-get update && apt-get install -y \
     git \
-    cron \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
