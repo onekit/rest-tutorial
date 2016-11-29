@@ -1,7 +1,5 @@
 FROM php:7-fpm
-
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
-
 #php modules
 RUN apt-get update && apt-get install -y \
     git \
@@ -21,20 +19,17 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install -j$(nproc) mcrypt && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd
-
 ENV HOME /app
 WORKDIR /app
-
 #composer install
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/local/bin
 #copy src to container
 COPY . /app
-
 #install symfony project
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
-
-#load fixtures with first start
 RUN chown www-data:www-data -R /app /tmp
 
-ENTRYPOINT ["while ! curl --output /dev/null --silent --head --fail http://172.25.0.1:3306; do sleep 1 && echo -n .; done; php /app/app/console doctrine:schema:update --force && php /app/app/console doctrine:fixtures:load --no-interaction"]
+#wait when MySQL service is UP. Then load fixtures
+RUN chmod 755 fixtures.sh
+ENTRYPOINT ["bash","fixtures.sh"]
