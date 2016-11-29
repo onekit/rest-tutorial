@@ -1,7 +1,5 @@
 FROM php:7-fpm
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
-ONBUILD RUN chown www-data:www-data -R /app /tmp
-
 #php modules
 RUN apt-get update && apt-get install -y \
     git \
@@ -32,4 +30,6 @@ COPY . /app
 RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 
 #wait when MySQL service is UP. Then load fixtures
-RUN chmod 755 ./app/config/docker/php-fpm-7/fixtures.sh
+COPY ./app/config/docker/php-fpm-7/fixtures.sh /app/fixtures.sh
+RUN chmod 755 /app/fixtures.sh
+ONBUILD RUN chown www-data:www-data -R /app /tmp

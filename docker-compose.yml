@@ -27,7 +27,6 @@ services:
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
       - ./web:/app/web
       - ./src:/app/src
-      - ./app/config/docker/php-fpm-7/fixtures.sh:/app/app/config/docker/php-fpm-7/fixtures.sh #fixtures
     networks:
       - mynet
     depends_on:
