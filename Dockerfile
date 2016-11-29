@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
 	mysql-client && \
 	docker-php-ext-install intl && \
     docker-php-ext-install pdo_mysql && \
-    docker-php-ext-install pdo_pgsql && \
     docker-php-ext-install zip && \
     docker-php-ext-install exif && \
     pecl install apcu && \
