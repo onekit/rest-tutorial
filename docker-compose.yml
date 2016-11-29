@@ -19,11 +19,13 @@ services:
   php:
     container_name: "rest_php"
     build: .
+    command: fixtures.sh
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
       - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
+      - ./app/fixtures.sh:/app/fixtures.sh
       - ./web:/app/web
       - ./src:/app/src
     networks:
