@@ -27,7 +27,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --filename=composer --in
 #copy src to container
 COPY . /app
 #install symfony project
-RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
+RUN composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 
 #wait when MySQL service is UP. Then load fixtures
 RUN chmod 755 ./app/config/docker/php-fpm-7/fixtures.sh
