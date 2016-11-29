@@ -4,12 +4,15 @@ services:
   db:
     container_name: "rest_db"
     image: mysql:8.0
+    build: ./app/config/docker/mysql/Dockerfile
     volumes:
       - "app-db:/var/lib/mysql:rw"
     ports:
       - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_USER=symfony
+      - MYSQL_PASSWORD=12345
       - MYSQL_DATABASE=restapi
     networks:
       - mynet
