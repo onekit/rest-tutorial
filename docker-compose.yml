@@ -3,7 +3,6 @@ version: '2'
 services:
   db:
     container_name: "rest_db"
-    image: mysql:8.0
     build: ./app/config/docker/mysql/Dockerfile
     volumes:
       - "app-db:/var/lib/mysql:rw"
