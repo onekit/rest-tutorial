@@ -31,4 +31,4 @@ RUN cd /app && composer install --no-ansi --no-interaction --no-progress --optim
 
 #wait when MySQL service is UP. Then load fixtures
 RUN chmod 755 ./app/config/docker/php-fpm-7/fixtures.sh
-ONBUILD RUN chown www-data:www-data -R /app /tmp
+RUN chown www-data:www-data -R /app /tmp
