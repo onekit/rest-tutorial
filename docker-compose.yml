@@ -19,15 +19,15 @@ services:
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh"
+    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh" #fixtures
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
       - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
-#      - ./app/config/docker/php-fpm-7/fixtures.sh:/app/app/config/docker/php-fpm-7/fixtures.sh
       - ./web:/app/web
       - ./src:/app/src
+      - ./app/config/docker/php-fpm-7/fixtures.sh:/app/app/config/docker/php-fpm-7/fixtures.sh #fixtures
     networks:
       - mynet
     depends_on:
