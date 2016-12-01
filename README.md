@@ -11,7 +11,7 @@ cd rest-tutorial
 ## Docker way ##
 Download & Install: [https://docker.com](https://docker.com)  
 Enter to project directory and run: ```docker-compose up -d```  
-Will create and launch three containeres: PHP, Nginx and MySQL.  
+It will create and launch three containeres: PHP, Nginx and MySQL.  
 If you prefer PostgreSQL, type ```docker-compose -f docker-compose-pgsql.yml up -d``` instead of previous command.  
 
 ## Manual ##
