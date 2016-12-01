@@ -1,7 +1,5 @@
 REST API server-side tutorial. How to do it easy with Symfony 2.8.
 
-
-
 ```
 #!sh
 
@@ -10,14 +8,22 @@ git clone https://bitbucket.org/onekit/rest-tutorial.git
 cd rest-tutorial
 ```
 
-Install with docker locally for demo:
-
+## Docker way one command installation ##
+Download & Install: [https://docker.com](https://docker.com)
+Enter to project directory and run:
 ```
 #!sh
 docker-compose up -d
-
 ```
-or install it manually:
+Will create containeres: PHP, Nginx, MySQL.
+
+For PostgreSQL database, type:
+```
+#!sh
+docker-compose -f docker-compose-pgsql.yml up -d
+```
+
+## Manual ##
 
 Get commands from https://getcomposer.org/download/
 and execute:
@@ -67,4 +73,6 @@ php app/console server:run localhost:8080
 
 ```
 
-More detailed explanations see on video: https://www.youtube.com/watch?v=nz1qudAh5hk
+### P.S.: ###
+Docker installation on video: https://www.youtube.com/watch?v=a3IFkmxmzFk
+Manual installation on video: https://www.youtube.com/watch?v=nz1qudAh5hk
