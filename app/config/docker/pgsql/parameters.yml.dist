@@ -1,0 +1,33 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_driver: pdo_pgsql
+    database_host: 172.25.0.1
+    database_port: 5432
+    database_name: restapi
+    database_user: postgres
+    database_password: postgres
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_port: 587
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_encryption: tls
+
+    locale: en
+
+    jwt_private_key_path: '%kernel.root_dir%/var/jwt/private.pem'
+    jwt_public_key_path: '%kernel.root_dir%/var/jwt/public.pem'
+    jwt_key_pass_phrase: '123123123'
+    jwt_token_ttl: 86400
+
+    admin_name: Alex
+    admin_email:   onekit@gmail.com
+    http_host: 127.0.0.1
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt

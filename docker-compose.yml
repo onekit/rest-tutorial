@@ -19,7 +19,7 @@ services:
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh"
+    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh 172.25.0.1 3306"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
