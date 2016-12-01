@@ -9,13 +9,14 @@ cd rest-tutorial
 ```
 
 ## Docker way ##
+[Docker install video](https://www.youtube.com/watch?v=a3IFkmxmzFk).  
 Download & Install: [https://docker.com](https://docker.com)  
 Enter to project directory and run: ```docker-compose up -d```  
 It will create and launch three containeres: PHP, Nginx and MySQL.  
 If you prefer PostgreSQL, type ```docker-compose -f docker-compose-pgsql.yml up -d``` instead of previous command.  
 
 ## Manual ##
-
+[Manual install video](https://www.youtube.com/watch?v=nz1qudAh5hk).  
 Get commands from https://getcomposer.org/download/
 and execute:
 
@@ -62,7 +63,3 @@ If you launch it locally, then can test fast with internal http-server.
 php app/console server:run localhost:8080
 
 ```
-
-### P.S.: ###
-Docker installation on video: https://www.youtube.com/watch?v=a3IFkmxmzFk
-Manual installation on video: https://www.youtube.com/watch?v=nz1qudAh5hk
