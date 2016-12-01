@@ -8,19 +8,11 @@ git clone https://bitbucket.org/onekit/rest-tutorial.git
 cd rest-tutorial
 ```
 
-## Docker way one command installation ##
+## Docker way ##
 Download & Install: [https://docker.com](https://docker.com)  
-Enter to project directory and run:  
-```
-#!sh
-docker-compose up -d
-```
-It creates three containeres: PHP, Nginx and MySQL.  
-If you prefer PostgreSQL, type:
-```
-#!sh
-docker-compose -f docker-compose-pgsql.yml up -d
-```
+Enter to project directory and run: ```docker-compose up -d```  
+Will create and launch three containeres: PHP, Nginx and MySQL.  
+If you prefer PostgreSQL, type ```docker-compose -f docker-compose-pgsql.yml up -d``` instead of previous command.  
 
 ## Manual ##
 
