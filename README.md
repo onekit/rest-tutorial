@@ -8,9 +8,9 @@ git clone https://bitbucket.org/onekit/rest-tutorial.git
 cd rest-tutorial
 ```
 
-## Docker way one command installation ##
-Download & Install: [https://docker.com](https://docker.com)
-Enter to project directory and run:
+## Docker way one command installation ##  
+Download & Install: [https://docker.com](https://docker.com)  
+Enter to project directory and run:  
 ```
 #!sh
 docker-compose up -d
