@@ -14,8 +14,7 @@ Install with docker locally for demo:
 
 ```
 #!sh
-
-./dev.sh
+docker-compose up -d
 
 ```
 or install it manually:
