@@ -2,28 +2,29 @@ version: '2'
 
 services:
   db:
-    container_name: "rest_db_pgsql"
-    image: postgres:9.6
+    container_name: "rest_db"
+    image: postgres:9.6-alpine
+    volumes:
+      - "app-db:/app-db-dumps"
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=restapi
+      - POSTGRES_USER = postgres
+      - POSTGRES_PASSWORD = postgres
+      - POSTGRES_DB = restapi
     networks:
       - mynet
 
   php:
-    container_name: "rest_php_pgsql"
-    build:
-     context: .
-     dockerfile: Dockerfile-php-pgsql
-#    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh 172.25.0.1 5432"
+    container_name: "rest_php"
+    build: .
+    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh google.com 80"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
       - ./app/config/docker/php-fpm-7/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
-      - ./app/config/docker/pgsql/parameters.yml.dist:/app/app/config/parameters.yml.dist
+      - ./app/config/docker/php-fpm-7/parameters.yml.dist:/app/app/config/parameters.yml
       - ./web:/app/web
       - ./src:/app/src
     networks:
@@ -32,7 +33,7 @@ services:
       - db
 
   nginx:
-    container_name: "rest_nginx_pgsql"
+    container_name: "rest_nginx"
     image: nginx
     dns:
       - 127.0.0.11

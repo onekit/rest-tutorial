@@ -9,17 +9,17 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_USER=symfony
-      - MYSQL_PASSWORD=12345
-      - MYSQL_DATABASE=restapi
+      - MYSQL_ROOT_PASSWORD = 12345
+      - MYSQL_USER = symfony
+      - MYSQL_PASSWORD = 12345
+      - MYSQL_DATABASE = restapi
     networks:
       - mynet
 
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh 172.25.0.1 3306"
+    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh db 3306"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
