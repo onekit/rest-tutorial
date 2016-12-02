@@ -6,8 +6,6 @@ services:
     image: mysql:8.0
     volumes:
       - "app-db:/var/lib/mysql:rw"
-    ports:
-      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD = 12345
       - MYSQL_USER = symfony
@@ -19,7 +17,7 @@ services:
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures.sh db 3306"
+    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures-mysql.sh"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
@@ -34,7 +32,7 @@ services:
 
   nginx:
     container_name: "rest_nginx"
-    image: nginx
+    image: nginx:1.11.6-alpine
     dns:
       - 127.0.0.11
     volumes:

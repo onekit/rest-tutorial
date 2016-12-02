@@ -1,0 +1,1 @@
+while ! curl --output /dev/null --silent --head --fail http://db:5432; do sleep 1 && echo -n .; done; echo "DB is UP!"; php /app/app/console doctrine:database:create --if-not-exists &&  php /app/app/console doctrine:schema:update --force && php /app/app/console doctrine:fixtures:load --no-interaction --append;chown www-data:www-data -R /app /tmp;php-fpm
