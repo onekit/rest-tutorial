@@ -4,10 +4,6 @@ services:
   db:
     container_name: "rest_db"
     image: postgres:9.6-alpine
-    volumes:
-      - "app-db:/app-db-dumps"
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_USER = postgres
       - POSTGRES_PASSWORD = postgres
