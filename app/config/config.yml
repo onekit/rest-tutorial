@@ -225,7 +225,7 @@ fos_user:
     db_driver: orm
 #    model_manager_name: api
     firewall_name: main
-    user_class: onekit\AppBundle\Entity\User
+    user_class: AppBundle\Entity\User
     use_listener: true
     service:
         mailer: fos_user.mailer.twig_swift

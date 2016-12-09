@@ -19,6 +19,7 @@ parameters:
     mailer_encryption: tls
 
     locale: en
+    ga_tracking: UA-63382793-3
 
     jwt_private_key_path: '%kernel.root_dir%/var/jwt/private.pem'
     jwt_public_key_path: '%kernel.root_dir%/var/jwt/public.pem'
