@@ -150,7 +150,7 @@ fos_rest:
     view:
         formats:
             json: true
-            xml: false
+            xml: true
             rss: false
         templating_formats:
             html: true
