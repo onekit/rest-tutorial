@@ -1,1 +1,1 @@
-docker-compose up -d
+php app/console server:run localhost:80

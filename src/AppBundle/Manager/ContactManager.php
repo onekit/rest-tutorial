@@ -6,7 +6,9 @@ use AppBundle\Repository\ContactRepository;
 use AppBundle\Entity\Contact;
 use AppBundle\Entity\Input\CreateContact;
 use AppBundle\Entity\Input\ContactPicture;
-use Symfony\Component\Filesystem\Filesystem;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class ContactManager extends ApiManager
 {
@@ -29,18 +31,29 @@ class ContactManager extends ApiManager
     protected $templating;
 
     /**
-     * @var string
+     * @var CacheManager
      */
-    protected $mediaPath;
+    protected $imagineCacheManager;
 
-    public function __construct(EntityManager $entityManager, $adminEmail, \Swift_Mailer $mailer, $mediaPath, \Twig_Environment $templating)
+    /**
+     * @var UploaderHelper
+     */
+    protected $uploaderHelper;
+
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    public function __construct(EntityManager $entityManager, $adminEmail, \Swift_Mailer $mailer, \Twig_Environment $templating, CacheManager $cacheManager, UploaderHelper $uploaderHelper, RequestStack $requestStack)
     {
         parent::__construct($entityManager);
         $this->adminEmail = $adminEmail;
         $this->mailer = $mailer;
-        $this->mediaPath = realpath($mediaPath);
         $this->templating = $templating;
-
+        $this->imagineCacheManager = $cacheManager;
+        $this->uploaderHelper = $uploaderHelper;
+        $this->requestStack = $requestStack;
     }
 
     protected function setRepository()
@@ -132,16 +145,18 @@ class ContactManager extends ApiManager
 
     public function setPicture(Contact $contact, ContactPicture $picture = null)
     {
-        if (!is_null($picture)) {
-            $image = $picture->image;
-            $fs = new Filesystem();
-            $fullPath = sprintf('%s/image-%u.%s', $this->mediaPath, $contact->getId(), $image->guessExtension());
-            $fs->copy($image->getRealPath(), $fullPath, true);
-            $contact->setImagePath(rtrim($fs->makePathRelative($fullPath, $this->mediaPath), '/'));
-        } else {
-            $contact->setImagePath(null);
-        }
+        $imageFile = !is_null($picture) ? $picture->image : null;
+        $baseURI = null;
+        $contact->setImage($imageFile);
         $this->updateContact($contact);
+
+        if ($imageFile) {
+            $picturePath = $this->uploaderHelper->asset($contact, 'image');
+            $baseURI = $this->imagineCacheManager->generateUrl($picturePath, 'contact_picture');
+        }
+        $contact->setImageUrl($baseURI);
+        $this->updateContact($contact);
+
         return $contact;
     }
 

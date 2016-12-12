@@ -93,17 +93,18 @@ vich_uploader:
     db_driver: orm
     mappings:
         contact_picture:
-            upload_destination: %kernel.root_dir%/media
+            upload_destination: %kernel.root_dir%/../web/media/picture
             namer: vich_uploader.namer_uniqid
+            uri_prefix: /media/picture
             delete_on_remove:   true  # determines whether to delete file upon removal of entity
             delete_on_update:   true  # determines wheter to delete the file upon update of entity
             inject_on_load:     true # determines whether to inject a File instance upon load
 
 liip_imagine:
-    loaders:
+    resolvers:
         default:
-            filesystem:
-                data_root: %kernel.root_dir%/media/
+            web_path:
+                web_root: "%kernel.root_dir%/../web/"
     filter_sets:
         contact_picture:
             quality: 95
@@ -146,11 +147,10 @@ fos_rest:
     body_converter:
         enabled: true
         validate: true
-        validation_errors_argument: constraints
     view:
         formats:
             json: true
-            xml: false
+            xml: true
             rss: false
         templating_formats:
             html: true

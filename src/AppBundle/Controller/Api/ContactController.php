@@ -10,7 +10,6 @@ use AppBundle\Annotation as App;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use AppBundle\Entity\Contact;
-use AppBundle\Entity\Input\ContactPicture;
 use AppBundle\Entity\Input\CreateContact;
 use AppBundle\Manager\ContactManager;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -139,65 +138,7 @@ class ContactController extends RestController
      */
     public function deleteContactAction(Contact $contact)
     {
-        return $this->contactManager->delete($contact);
-    }
-
-
-    /**
-     * @ApiDoc(
-     *      parameters={
-     *          {"name"="image", "dataType"="file", "required"=true, "description"="contact picture"}
-     *      },
-     *      views = {"default", "admin"}
-     * )
-     *
-     * @Sensio\Security("has_role('ROLE_ADMIN')")
-     * @Rest\Post("/{id}/picture", name="api_post_contact_picture")
-     * @Sensio\ParamConverter("contact", converter="doctrine.orm")
-     * @Sensio\ParamConverter("picture", converter="api.converter.contact_picture")
-     * @Rest\View(serializerGroups={"default", "contact_picture"})
-     *
-     * @param Contact $contact
-     * @param ContactPicture $picture
-     * @return Contact|Response
-     */
-    public function postPictureAction(Contact $contact, ContactPicture $picture)
-    {
-        $contact = $this->contactManager->setPicture($contact, $picture);
-        return $contact;
-    }
-
-    /**
-     * @ApiDoc(views = {"default", "admin"})
-     *
-     * @Sensio\Security("has_role('ROLE_ADMIN')")
-     * @Rest\Get("/{id}/picture", name="api_get_contact_picture", requirements={"id" = "\d+"})
-     * @Sensio\ParamConverter("contact", converter="doctrine.orm")
-     * @Rest\View(serializerGroups={"default", "contact_picture"})
-     *
-     * @param Contact $contact
-     * @return Contact
-     */
-    public function getPictureAction(Contact $contact)
-    {
-        return $contact;
-    }
-
-    /**
-     * @ApiDoc(views = {"default", "admin"})
-     *
-     * @Sensio\Security("has_role('ROLE_ADMIN')")
-     * @Rest\Delete("/{id}/picture", name="api_delete_contact_picture", requirements={"id" = "\d+"})
-     * @Sensio\ParamConverter("contact", converter="doctrine.orm")
-     * @Rest\View(serializerGroups={"default", "contact_picture"})
-     *
-     * @param Contact $contact
-     * @return Contact
-     */
-    public function deletePictureAction(Contact $contact)
-    {
-        $contact = $this->contactManager->setPicture($contact);
-        return $contact;
+        $this->contactManager->delete($contact);
     }
 
 }

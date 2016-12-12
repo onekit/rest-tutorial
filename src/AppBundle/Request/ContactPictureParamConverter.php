@@ -26,6 +26,10 @@ class ContactPictureParamConverter implements ParamConverterInterface
         $picture = new ContactPicture();
         $picture->image = $request->files->get('image');
         $request->attributes->set($configuration->getName(), $picture);
+        $request->attributes->set(
+            'validationErrors',
+            $this->validator->validate($picture)
+        );
     }
 
     function __construct(ValidatorInterface $validator)

@@ -81,27 +81,25 @@ class Contact
     public $details;
 
     /**
-     * @Vich\UploadableField(mapping="contact_image", fileNameProperty="imagePath")
+     * @Vich\UploadableField(mapping="contact_picture", fileNameProperty="imageName")
      *
      * @var File
+     *
+     *
      */
-    public $image;
+    protected $image;
 
     /**
-     * @var string
-     *
-     * @var string $imagePath
-     * @ORM\Column(name="image_path", type="string", length=64, nullable=true)
+     * @var string $imageName
+     * @ORM\Column(name="image_name", type="string", length=64, nullable=true)
      */
-    protected $imagePath;
+    protected $imageName;
 
     /**
-     * @var string
-     *
-     * @var string $imagePath
+     * @var string $imageUrl
      * @ORM\Column(name="image_url", type="string", length=255, nullable=true)
      * @Serial\SerializedName("image")
-     * @Serial\Groups({"contact_picture"})
+     * @Serial\Groups({"contact_picture","default"})
      */
     protected $imageUrl;
 
@@ -215,28 +213,54 @@ class Contact
         $this->when = $when;
     }
 
-
     /**
-     * @return string
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return Contact
      */
-    public function getImagePath()
+    public function setImage(File $image = null)
     {
-        return $this->imagePath;
-    }
+        $this->image = $image;
 
-    /**
-     * @param string $imagePath
-     * @return $this
-     */
-    public function setImagePath($imagePath)
-    {
-        $this->imagePath = $imagePath;
+        if ($image) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setWhen(new \DateTime('now'));
+        }
 
         return $this;
     }
 
     /**
+     * @return File|null
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+
+    /**
      * @return string
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string $imageName
+     * @return $this
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
      */
     public function getImageUrl()
     {
@@ -244,14 +268,10 @@ class Contact
     }
 
     /**
-     * @param string $imageUrl
-     * @return $this
+     * @param mixed $imageUrl
      */
     public function setImageUrl($imageUrl)
     {
         $this->imageUrl = $imageUrl;
-
-        return $this;
     }
-
 }
