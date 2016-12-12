@@ -139,7 +139,7 @@ class ContactManager extends ApiManager
             $fs->copy($image->getRealPath(), $fullPath, true);
             $contact->setImagePath(rtrim($fs->makePathRelative($fullPath, $this->mediaPath), '/'));
         } else {
-            $contact->setImagePath(null);
+            $contact->setImageUrl(null);
         }
         $this->updateContact($contact);
         return $contact;

@@ -34,20 +34,10 @@ services:
       tags:
           - { name: kernel.event_subscriber }
 
-  app.decoder.form:
-      class: AppBundle\Decoder\FormDecoder
-
   twig.text_extension:
      class: Twig_Extensions_Extension_Text
      tags:
          - name: twig.extension
-
-  app.event.contact_picture_listener:
-    class: AppBundle\EventListener\ContactPictureListener
-    arguments: ['@liip_imagine.cache.manager']
-    tags:
-      - { name: doctrine.event_listener, event: postPersist }
-      - { name: doctrine.event_listener, event: postUpdate }
 
   api.converter.contact_picture:
     class: AppBundle\Request\ContactPictureParamConverter
