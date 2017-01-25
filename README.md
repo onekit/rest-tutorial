@@ -59,6 +59,6 @@ php app/console server:run localhost:8080
 License
 -------
 
-This code is under the MIT license. See the complete license in the bundle:
+This code is under the MIT license. See the complete license in the code:
 
     app/Resources/meta/LICENSE
