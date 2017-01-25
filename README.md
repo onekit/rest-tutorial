@@ -55,3 +55,10 @@ If you launch it locally, then can test fast with internal http-server.
 php app/console server:run localhost:8080
 
 ```
+
+License
+-------
+
+This code is under the MIT license. See the complete license in the bundle:
+
+    app/Resources/meta/LICENSE
