@@ -147,6 +147,7 @@ fos_rest:
     body_converter:
         enabled: true
         validate: true
+        validation_errors_argument: constraints
     view:
         formats:
             json: true
