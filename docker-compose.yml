@@ -3,7 +3,7 @@ version: '2'
 services:
   db:
     container_name: "rest_db"
-    image: mysql:8.0
+    image: mysql:8.0.4-rc
     volumes:
       - "app-db:/var/lib/mysql:rw"
     ports:
