@@ -5,9 +5,9 @@ services:
     container_name: "rest_db"
     image: postgres:9.6-alpine
     environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=restapi
     networks:
       - mynet
 
