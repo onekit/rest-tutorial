@@ -13,6 +13,7 @@ services:
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
+      - MYSQL_ALLOW_EMPTY_PASSWORD
     networks:
       - mynet
 
