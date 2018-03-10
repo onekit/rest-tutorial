@@ -3,16 +3,17 @@ version: '2'
 services:
   db:
     container_name: "rest_db"
-    image: mysql:8
+    image: mysql:5.7
     volumes:
-      - "./app/config/docker/mysql:/var/lib/mysql:rw"
+      - ./app/config/docker/mysql/data:/var/lib/mysql
+      - ./log/mysql:/var/log/mysql
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
     networks:
       - mynet
 
