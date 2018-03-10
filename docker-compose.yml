@@ -3,7 +3,7 @@ version: '2'
 services:
   db:
     container_name: "rest_db"
-    image: mysql:5.7
+    image: mysql:8
     volumes:
       - ./app/config/docker/mysql/data:/var/lib/mysql
       - ./log/mysql:/var/log/mysql
