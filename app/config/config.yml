@@ -241,3 +241,13 @@ knp_paginator:
     template:
         pagination: AppBundle:Pagination:pagination.html.twig     # sliding pagination controls template
         sortable: AppBundle:Pagination:sortable_link.html.twig # sort link template
+
+monolog:
+    handlers:
+        main:
+            type:                fingers_crossed
+            action_level:        WARNING
+            # By default, buffer_size is unlimited (0), which could
+            # generate huge logs.
+            buffer_size:         0
+            handler:             custom

@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  db:
-    container_name: "rest_db"
+  pgsql:
+    container_name: "rest_pgsql"
     image: postgres:9.6-alpine
     environment:
       - POSTGRES_USER=postgres
@@ -26,7 +26,7 @@ services:
     networks:
       - mynet
     depends_on:
-      - db
+      - pgsql
 
   nginx:
     container_name: "rest_nginx"

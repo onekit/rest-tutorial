@@ -4,9 +4,9 @@ namespace AppBundle\Features\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Rezzza\RestApiBehatExtension\Rest\RestApiBrowser;
-use Rezzza\RestApiBehatExtension\RestApiContext;
-use Rezzza\RestApiBehatExtension\Json\JsonInspector;
+use Ubirak\RestApiBehatExtension\Rest\RestApiBrowser;
+use Ubirak\RestApiBehatExtension\RestApiContext;
+use Ubirak\RestApiBehatExtension\Json\JsonInspector;
 
 
 class RestContext extends RestApiContext
