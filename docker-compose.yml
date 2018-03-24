@@ -1,17 +1,17 @@
 version: '2.2'
 
 services:
-  mysql:
+  db:
     container_name: "rest_mysql"
-    image: mysql:8
+    image: mysql
     volumes:
-      - ./app/config/docker/mysql/data:/var/lib/mysql
-      - ./log/mysql:/var/log/mysql
-    ports:
-      - "3306:3306"
+        - "./.data/db:/var/lib/mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
     networks:
       - mynet
 
@@ -26,10 +26,16 @@ services:
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
       - ./web:/app/web
       - ./src:/app/src
+    environment:
+      - SYMFONY__DATABASE__HOST=${MYSQL_ROOT_HOST}
+      - SYMFONY__DATABASE__PORT=${MYSQL_PORT}
+      - SYMFONY__DATABASE__NAME=${MYSQL_DATABASE}
+      - SYMFONY__DATABASE__USER=${MYSQL_USER}
+      - SYMFONY__DATABASE__PASSWORD=${MYSQL_PASSWORD}
     networks:
       - mynet
     depends_on:
-      - mysql
+      - db
 
   nginx:
     container_name: "rest_nginx"
@@ -56,3 +62,4 @@ networks:
 volumes:
   app-files: {}
   app-db: {}
+
