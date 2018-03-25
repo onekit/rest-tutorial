@@ -15,6 +15,9 @@ Enter to project directory and run: ```docker-compose up -d```
 It will create and launch three containeres: PHP, Nginx and MySQL.  
 If you prefer PostgreSQL, type ```docker-compose -f docker-compose-pgsql.yml up -d``` instead of previous command.  
 
+Wait till services up and load fixtures by command: ```docker-compose exec php bash /app/app/config/docker/fixtures.sh```
+
+
 ## Manual ##
 [Manual install video](https://www.youtube.com/watch?v=nz1qudAh5hk).  
 Get commands from https://getcomposer.org/download/

@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7-fpm
 MAINTAINER Aliaksandr Harbunou "onekit@gmail.com"
 #php modules
 RUN apt-get update && apt-get install -y \
@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
-    libpng12-dev \
+    libpng-dev \
 	libicu-dev \
 	libpq-dev \
 	mysql-client && \
@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install exif && \
     pecl install apcu && \
     docker-php-ext-enable apcu && \
-    docker-php-ext-install mcrypt && \
+    pecl install mcrypt-1.0.1 && \
+    docker-php-ext-enable mcrypt && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd
 ENV HOME /app

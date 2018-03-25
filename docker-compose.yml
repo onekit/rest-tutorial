@@ -1,25 +1,22 @@
-version: '2'
+version: '2.2'
 
 services:
   db:
-    container_name: "rest_db"
-    image: mysql:8.0
+    container_name: "rest_mysql"
+    image: mysql:5.7
     volumes:
-      - "app-db:/var/lib/mysql:rw"
-    ports:
-      - "3306:3306"
+        - "./.data/db:/var/lib/mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_USER=symfony
-      - MYSQL_PASSWORD=12345
-      - MYSQL_DATABASE=restapi
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - mynet
 
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures-mysql.sh"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
@@ -27,6 +24,12 @@ services:
       - ./app/config/docker/php-fpm-7/php.ini:/usr/local/etc/php/php.ini
       - ./web:/app/web
       - ./src:/app/src
+    environment:
+      - SYMFONY__DATABASE__HOST=${MYSQL_ROOT_HOST}
+      - SYMFONY__DATABASE__PORT=${MYSQL_PORT}
+      - SYMFONY__DATABASE__NAME=${MYSQL_DATABASE}
+      - SYMFONY__DATABASE__USER=${MYSQL_USER}
+      - SYMFONY__DATABASE__PASSWORD=${MYSQL_PASSWORD}
     networks:
       - mynet
     depends_on:
@@ -57,3 +60,4 @@ networks:
 volumes:
   app-files: {}
   app-db: {}
+

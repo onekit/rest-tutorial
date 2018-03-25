@@ -3,7 +3,7 @@
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_driver: pdo_mysql
-    database_host: db
+    database_host: mysql
     database_port: 3306
     database_name: restapi
     database_user: root
