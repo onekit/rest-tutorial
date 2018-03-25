@@ -14,7 +14,6 @@ services:
   php:
     container_name: "rest_php"
     build: .
-    command: /bin/sh -c "/app/app/config/docker/php-fpm-7/fixtures-pgsql.sh"
     volumes:
       - "app-files:/app/web"
       - ./log/php-fpm:/var/log/php-fpm
